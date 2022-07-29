@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/27 20:54:31 by akilk            ###   ########.fr       */
+/*   Updated: 2022/07/28 16:04:21 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,19 @@
 
 typedef struct s_farm
 {
-	int	ants;
-	int	rooms;
-	int	links;
-}		t_farm;
+	size_t	ants;
+	size_t	room_nb;
+	size_t	start;
+	size_t	end;
+	char	*room_name;
+	char	**links;
+}				t_farm;
+
+void	parse(char *buf, t_farm *farm);
+int		main(void);
+
+/* libft */
+int	ft_atoi(const char *str);
+int	ft_isdigit(int c);
 
 #endif
