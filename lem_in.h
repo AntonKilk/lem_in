@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/01 20:34:51 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/01 20:55:36 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_farm
 	size_t	rooms_total;
 	char	*start;
 	char	*end;
-	char	rooms[0];
+	char	**rooms;
 }				t_farm;
 
 enum	state
