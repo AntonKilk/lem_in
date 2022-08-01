@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_count_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/31 13:45:49 by akilk            ###   ########.fr       */
+/*   Created: 2022/03/10 06:32:25 by akilk             #+#    #+#             */
+/*   Updated: 2022/03/10 06:33:28 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "libft.h"
 
-// void	read_farm(char *buf)
-// {
-// 	int	ret;
-
-// 	ret = read(0, buf, BUFF_SIZE);
-// 	if (ret < 0)
-// 		fprintf(stderr, "Error reading in read_farm");//replace
-// 	buf[ret] = '\0';
-// 	printf("%s\n", buf);
-// }
-
-int	main(void)
+int	ft_count_words(const char *s, char c)
 {
-	// char	buf[BUFF_SIZE];
-	t_farm	farm;
+	int		state;
+	int		count;
 
-	// read_farm(buf);
-	parse(&farm);
-	return (0);
+	count = 0;
+	state = 0;
+	while (*s)
+	{
+		if (*s != c && state == 0)
+		{
+			count++;
+			state = 1;
+		}
+		else if (*s == c && state == 1)
+			state = 0;
+		s++;
+	}
+	return (count);
 }

@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/31 13:45:49 by akilk            ###   ########.fr       */
+/*   Created: 2021/11/11 12:33:17 by akilk             #+#    #+#             */
+/*   Updated: 2021/12/02 14:08:55 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "libft.h"
+#include <stdlib.h>
 
-// void	read_farm(char *buf)
-// {
-// 	int	ret;
-
-// 	ret = read(0, buf, BUFF_SIZE);
-// 	if (ret < 0)
-// 		fprintf(stderr, "Error reading in read_farm");//replace
-// 	buf[ret] = '\0';
-// 	printf("%s\n", buf);
-// }
-
-int	main(void)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	// char	buf[BUFF_SIZE];
-	t_farm	farm;
+	char	*new_s;
+	int		i;
 
-	// read_farm(buf);
-	parse(&farm);
-	return (0);
+	if (s == NULL || f == NULL)
+		return (NULL);
+	new_s = ft_strnew(ft_strlen(s));
+	if (!new_s)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		new_s[i] = f(i, s[i]);
+		i++;
+	}
+	return (new_s);
 }

@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_striter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/31 13:45:49 by akilk            ###   ########.fr       */
+/*   Created: 2021/11/11 09:32:56 by akilk             #+#    #+#             */
+/*   Updated: 2021/12/02 12:09:46 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "libft.h"
 
-// void	read_farm(char *buf)
-// {
-// 	int	ret;
-
-// 	ret = read(0, buf, BUFF_SIZE);
-// 	if (ret < 0)
-// 		fprintf(stderr, "Error reading in read_farm");//replace
-// 	buf[ret] = '\0';
-// 	printf("%s\n", buf);
-// }
-
-int	main(void)
+void	ft_striter(char *s, void (*f)(char *))
 {
-	// char	buf[BUFF_SIZE];
-	t_farm	farm;
-
-	// read_farm(buf);
-	parse(&farm);
-	return (0);
+	if (s == NULL || f == NULL)
+		return ;
+	while (*s)
+		f(s++);
 }

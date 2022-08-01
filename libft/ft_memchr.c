@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/31 13:45:49 by akilk            ###   ########.fr       */
+/*   Created: 2021/11/08 11:39:20 by akilk             #+#    #+#             */
+/*   Updated: 2021/11/19 14:18:17 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "libft.h"
 
-// void	read_farm(char *buf)
-// {
-// 	int	ret;
-
-// 	ret = read(0, buf, BUFF_SIZE);
-// 	if (ret < 0)
-// 		fprintf(stderr, "Error reading in read_farm");//replace
-// 	buf[ret] = '\0';
-// 	printf("%s\n", buf);
-// }
-
-int	main(void)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	// char	buf[BUFF_SIZE];
-	t_farm	farm;
+	size_t			i;
+	unsigned char	*str;
+	unsigned char	ch;
 
-	// read_farm(buf);
-	parse(&farm);
-	return (0);
+	i = 0;
+	str = (unsigned char *)s;
+	ch = (unsigned char)c;
+	while (i < n)
+	{
+		if (str[i] == ch)
+			return (str + i);
+		i++;
+	}
+	return (NULL);
 }

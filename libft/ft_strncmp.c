@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.h                                           :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/28 16:04:21 by akilk            ###   ########.fr       */
+/*   Created: 2021/11/03 16:40:04 by akilk             #+#    #+#             */
+/*   Updated: 2021/11/05 15:30:16 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN_H
-# define LEM_IN_H
-# define BUFF_SIZE 1000000
+#include "libft.h"
 
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-
-typedef struct s_farm
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t	ants;
-	size_t	room_nb;
-	size_t	start;
-	size_t	end;
-	char	*room_name;
-	char	**links;
-}				t_farm;
+	size_t	i;
 
-void	parse(char *buf, t_farm *farm);
-int		main(void);
-
-/* libft */
-int	ft_atoi(const char *str);
-int	ft_isdigit(int c);
-
-#endif
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (*s1 && (*s1 == *s2) && --n)
+	{
+		s1++;
+		s2++;
+	}
+	return (*(const unsigned char *)s1 - *(const unsigned char *)s2);
+}

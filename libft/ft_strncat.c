@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/31 13:45:49 by akilk            ###   ########.fr       */
+/*   Created: 2021/11/01 15:40:09 by akilk             #+#    #+#             */
+/*   Updated: 2021/11/02 14:23:54 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "libft.h"
 
-// void	read_farm(char *buf)
-// {
-// 	int	ret;
-
-// 	ret = read(0, buf, BUFF_SIZE);
-// 	if (ret < 0)
-// 		fprintf(stderr, "Error reading in read_farm");//replace
-// 	buf[ret] = '\0';
-// 	printf("%s\n", buf);
-// }
-
-int	main(void)
+char	*ft_strncat(char *dest, const char *src, size_t n)
 {
-	// char	buf[BUFF_SIZE];
-	t_farm	farm;
+	size_t	count;
+	char	*sum;
 
-	// read_farm(buf);
-	parse(&farm);
-	return (0);
+	sum = dest;
+	count = 0;
+	while (*sum != '\0')
+		sum++;
+	while (*src != '\0')
+	{
+		if (count == n)
+			break ;
+		*sum = *src;
+		src++;
+		sum++;
+		count++;
+	}
+	*sum = '\0';
+	return (dest);
 }
