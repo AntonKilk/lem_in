@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/01 15:00:44 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/01 20:34:51 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@
 typedef struct s_farm
 {
 	size_t	ants;
-	size_t	room_nb;
-	size_t	start;
-	size_t	end;
-	char	*room_names;
-	char	**links;
+	size_t	rooms_total;
+	char	*start;
+	char	*end;
+	char	rooms[0];
 }				t_farm;
 
 enum	state
