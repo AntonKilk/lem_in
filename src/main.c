@@ -6,29 +6,21 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/07/31 13:45:49 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/02 20:15:41 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-// void	read_farm(char *buf)
-// {
-// 	int	ret;
-
-// 	ret = read(0, buf, BUFF_SIZE);
-// 	if (ret < 0)
-// 		fprintf(stderr, "Error reading in read_farm");//replace
-// 	buf[ret] = '\0';
-// 	printf("%s\n", buf);
-// }
+	//ToDo: in parse_ants add error handling for chars etc
+	//ToDo: add error if coordinates are wrong?
+	//ToDo validate links with names
+	//ToDo: no single path from start to end
 
 int	main(void)
 {
-	// char	buf[BUFF_SIZE];
 	t_farm	farm;
 
-	// read_farm(buf);
 	parse(&farm);
 	return (0);
 }

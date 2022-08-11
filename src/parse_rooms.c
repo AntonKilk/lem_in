@@ -1,0 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_rooms.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/02 17:04:17 by akilk             #+#    #+#             */
+/*   Updated: 2022/08/10 07:04:39 by akilk            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../lem_in.h"
+
+t_lst	*my_lstnew(void const *content)
+{
+	t_lst	*ptr;
+	size_t	size;
+
+	size = ft_strlen(content);
+	ptr = (t_lst *)malloc(sizeof(t_lst));
+	if (!ptr)
+		return (NULL);
+	if (content == NULL)
+	{
+		ptr->content = NULL;
+		ptr->next = NULL;
+		return (ptr);
+	}
+	ptr->content = ft_memalloc(size);
+	if (!ptr->content)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	ft_memcpy(ptr->content, content, size);
+	ptr->next = NULL;
+	return (ptr);
+}
+
+void	my_lstadd(t_lst **alst, t_lst *new)
+{
+	if (alst == NULL)
+		return ;
+	new->next = *alst;
+	*alst = new;
+}
+
+void	parse_rooms(size_t count_rooms, t_lst *room_lst, t_farm *farm)
+{
+	farm->rooms = (char **)malloc(sizeof (char *) * (count_rooms + 1));
+	farm->rooms[count_rooms] = NULL;
+	if (!farm->rooms)
+		fprintf(stderr, "Error allocating farm->rooms in parse_rooms()"); //
+	while (room_lst)
+	{
+		count_rooms--;
+		// printf("value: %s\n", (char *)room_lst->content);
+		farm->rooms[count_rooms] = ft_strdup((char *)room_lst->content);
+		free(room_lst->content);
+		room_lst = room_lst->next;
+	}
+	free(room_lst);
+}
+
