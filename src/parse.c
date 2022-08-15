@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 08:47:59 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/11 10:44:15 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/11 15:16:59 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ char	*get_room_name(char *line)
 	return (result);
 }
 
-int	parsing_is_valid(size_t rooms, t_farm *farm)
+int	parsing_is_valid(t_farm *farm)
 {
-	if (farm-> rooms <= 0)
+	if (farm->rooms_nb <= 0)
 	{
 		fprintf(stderr, "No rooms found");
 		return (0);
@@ -48,11 +48,10 @@ void	parse(t_farm *farm)
 	enum state	line_state;
 	char		*line;
 	t_lst		*room_lst;
-	size_t		count_rooms;
 
 	line = NULL;
 	room_lst = NULL;
-	count_rooms = 0;
+	farm->rooms_nb = 0;
 	while (get_next_line(0, &line))
 	{
 		if (line_state == START)
@@ -66,18 +65,20 @@ void	parse(t_farm *farm)
 			break ;// and parse links in separate function after parsing rooms
 		else if (line_state == ROOMS)
 		{
-			count_rooms++;
+			farm->rooms_nb++;
 			my_lstadd(&room_lst, my_lstnew(get_room_name(line)));
 		}
 		else if (line_state == ERROR)
 			fprintf(stderr, "Error reading line\n%s", line); //rplc
 		ft_strdel(&line);
 	}
-	parse_rooms(count_rooms, room_lst, farm);
-	parse_links(count_rooms, &line, farm, &line_state);
-	if (!parsing_is_valid(count_rooms, farm))
+	parse_rooms(room_lst, farm);
+	parse_links(&line, farm, &line_state);
+	print_mtx(farm);
+	if (!parsing_is_valid(farm))
 		fprintf(stderr, "Wrong input."); // rplc
 }
+
 	// int i = 0;
 	// while (i < count_rooms)
 	// {

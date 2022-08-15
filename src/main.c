@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/02 20:15:41 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/11 15:21:11 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ int	main(void)
 	t_farm	farm;
 
 	parse(&farm);
+	printf("BFS starts\n");
+	bfs(&farm);
 	return (0);
 }

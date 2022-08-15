@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:04:17 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/10 07:04:39 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/11 14:56:19 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,20 @@ void	my_lstadd(t_lst **alst, t_lst *new)
 	*alst = new;
 }
 
-void	parse_rooms(size_t count_rooms, t_lst *room_lst, t_farm *farm)
+void	parse_rooms(t_lst *room_lst, t_farm *farm)
 {
-	farm->rooms = (char **)malloc(sizeof (char *) * (count_rooms + 1));
-	farm->rooms[count_rooms] = NULL;
+	size_t	size;
+
+	size = farm->rooms_nb;
+	farm->rooms = (char **)malloc(sizeof (char *) * (size + 1));
+	farm->rooms[size] = NULL;
 	if (!farm->rooms)
 		fprintf(stderr, "Error allocating farm->rooms in parse_rooms()"); //
 	while (room_lst)
 	{
-		count_rooms--;
+		size--;
 		// printf("value: %s\n", (char *)room_lst->content);
-		farm->rooms[count_rooms] = ft_strdup((char *)room_lst->content);
+		farm->rooms[size] = ft_strdup((char *)room_lst->content);
 		free(room_lst->content);
 		room_lst = room_lst->next;
 	}

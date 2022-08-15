@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:29:44 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/11 11:31:26 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/11 14:54:47 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,34 +60,11 @@ void	get_links(size_t size, char *line, t_farm *farm)
 	fill_links(size, farm, fst, snd);
 }
 
-/* PRINTS MATRIX OF LINKS,
-	where room[i] connected to room[j] if links[i][j] == 1 */
-void	print_mtx(size_t size, t_farm *farm)
+void	parse_links(char **line, t_farm *farm, enum state *state)
 {
-	printf("print matrix with size: %zu\n", size);
-	int i = 0;
-	printf("|-> ");
-	while (i < size)
-		printf("%3.3s", farm->rooms[i++]);
-	printf("\n");
-	i = 0;
-	int k = 0;
-	printf("%4.4s", farm->rooms[k++]);
-	while(i < size * size)
-	{
-		printf("%3c", farm->links[i]);
-		if (i % size== size - 1)
-		{
-			printf("\n");
-			if (k < size)
-				printf("%4.4s", farm->rooms[k++]);
-		}
-		i++;
-	}
-}
+	size_t	size;
 
-void	parse_links(size_t size, char **line, t_farm *farm, enum state *state)
-{
+	size = farm->rooms_nb;
 	farm->links = ft_strnew(size * size);
 	ft_memset(farm->links, '0', size * size);
 	while (*state == LINKS)
@@ -101,5 +78,4 @@ void	parse_links(size_t size, char **line, t_farm *farm, enum state *state)
 		if (!get_next_line(0, line))
 			break ;
 	}
-	print_mtx(size, farm);
 }
