@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/11 15:06:35 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/24 19:31:44 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ typedef struct s_farm
 	char	**rooms;
 	char	*links;
 }				t_farm;
+
+typedef struct s_room
+{
+	int		room_nb;
+	int		dist;
+	struct s_room	*next;
+}				t_room;
 
 enum	state
 {
