@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:29:44 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/11 14:54:47 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/25 08:54:42 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	fill_links(size_t size, t_farm *farm, char *fst, char *snd)
 		}
 		h++;
 	}
-	farm->links[h * size + w] = '1';
-	farm->links[w * size + h] = '1';
+	farm->links[h * size + w] = 1;
+	farm->links[w * size + h] = 1;
 }
 
 void	get_links(size_t size, char *line, t_farm *farm)
@@ -65,8 +65,11 @@ void	parse_links(char **line, t_farm *farm, enum state *state)
 	size_t	size;
 
 	size = farm->rooms_nb;
-	farm->links = ft_strnew(size * size);
-	ft_memset(farm->links, '0', size * size);
+	farm->links = (int *)malloc(sizeof (int *) * (size * size));
+	if (!farm->links)
+		return ; // add error func
+	ft_memset(farm->links, 0, size * size);
+
 	while (*state == LINKS)
 	{
 		read_state(state, *line);
