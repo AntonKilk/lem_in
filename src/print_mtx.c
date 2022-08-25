@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 11:51:29 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/11 15:19:58 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/25 08:56:57 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_mtx(t_farm *farm)
 	printf("%4.4s", farm->rooms[k++]);
 	while(i < size * size)
 	{
-		printf("%3c", farm->links[i]);
+		printf("%3d", farm->links[i]);
 		if (i % size== size - 1)
 		{
 			printf("\n");

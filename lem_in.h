@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/25 08:12:24 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/25 10:28:04 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ typedef struct s_farm
 	char	*start;
 	char	*end;
 	char	**rooms;
-	char	*links;
+	int		*links;
 }				t_farm;
 
-typedef struct s_room
-{
-	int				room_nb;
-	int				dist;
-	struct s_room	*next;
-}			t_room;
+// typedef struct s_room
+// {
+// 	int				room_nb;
+// 	int				dist;
+// 	struct s_room	*next;
+// }			t_room;
 
 typedef struct queue
 {
