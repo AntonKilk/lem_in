@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 08:47:59 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/11 15:16:59 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/24 19:34:13 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,7 @@ void	parse(t_farm *farm)
 	}
 	parse_rooms(room_lst, farm);
 	parse_links(&line, farm, &line_state);
-	print_mtx(farm);
 	if (!parsing_is_valid(farm))
 		fprintf(stderr, "Wrong input."); // rplc
 }
-
-	// int i = 0;
-	// while (i < count_rooms)
-	// {
-	// 	printf("room[%d]: %s\n", i, farm->rooms[i]);
-	// 	i++;
-	// }
-
-
-	// printf("line: %s\n", line);
-	// printf("state: %d\n", line_state);
-	// printf("ants: %zu\n", farm->ants);
-	// printf("start: %s\n", farm->start);
-	// printf("end: %s\n", farm->end);
 
