@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/25 10:28:04 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/26 10:04:53 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,18 @@ typedef struct s_farm
 	int		*links;
 }				t_farm;
 
-// typedef struct s_room
-// {
-// 	int				room_nb;
-// 	int				dist;
-// 	struct s_room	*next;
-// }			t_room;
-
-typedef struct queue
+typedef struct s_queue
 {
 	int	head;
 	int	tail;
 	int	data[0];
 }			t_queue;
+
+typedef struct s_path
+{
+	int				room;
+	struct s_path	*next;
+}					t_path;
 
 enum	state
 {
@@ -76,8 +75,10 @@ void	parse_links(char **line, t_farm *farm, enum state *state);
 /* print_mtx.c */
 void	print_mtx(t_farm *farm);
 
-/* find_paths.c */
-void	bfs(t_farm *farm);
+/* bfs.c */
+int	find_end(t_farm *farm);
+int	is_connected(t_farm *farm, int fst, int snd);
+int	bfs(t_farm *farm, int *distances);
 
 /* queue helpers.c */
 t_queue *new_queue(int size);
@@ -85,5 +86,8 @@ void	put(t_queue *q, int item);
 int	get(t_queue *q);
 int	is_empty(t_queue *q);
 void	release_queue(t_queue *q);
+
+/* find_paths.c */
+int	find_path(t_farm *farm, int *distances);
 
 #endif
