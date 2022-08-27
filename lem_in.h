@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/26 10:04:53 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/26 17:16:31 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,6 @@ typedef struct s_queue
 	int	tail;
 	int	data[0];
 }			t_queue;
-
-typedef struct s_path
-{
-	int				room;
-	struct s_path	*next;
-}					t_path;
 
 enum	state
 {
@@ -88,6 +82,6 @@ int	is_empty(t_queue *q);
 void	release_queue(t_queue *q);
 
 /* find_paths.c */
-int	find_path(t_farm *farm, int *distances);
+void	create_paths(t_farm *farm, int *distances);
 
 #endif

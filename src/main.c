@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/25 13:23:55 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/26 17:14:54 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	main(void)
 
 	distances = new_distances(farm.rooms_nb);
 	bfs(&farm, distances);
-	find_path(&farm, distances);
+	create_paths(&farm, distances);
 	// print_mtx(&farm);
+	free(distances);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:24:25 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/26 11:18:05 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/26 12:34:52 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	bfs(t_farm *farm, int *distances)
 	if (!end_reached(farm, distances))
 		return (printf("No connections to finish found\n"));
 	release_queue(q);
-	free(distances);
 	return (1);
 }
 	// for (int k = 0; k < farm->rooms_nb; k++)

@@ -6,46 +6,61 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/26 11:19:44 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/26 17:16:09 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
 
-t_path *new_path(int room) {
-	t_path *path;
+int	check_distances(t_farm *farm, t_list **path, int *distances, int current)
+{
+	int	i;
+	int	row;
+	t_list	*neighboor;
 
-	path = malloc(sizeof(t_path));
-	if (!path)
-		return (NULL); //add error h
-	path->room = room;
-	path->next = 0;
+	row = farm->rooms_nb * (current);
+	i = 0;
+	while ((i + row) < (farm->rooms_nb + row))
+	{
+		if (is_connected(farm, i, row) && distances[i] == distances[current] - 1)
+		{
+			neighboor = ft_lstnew(&i, sizeof(i));
+			ft_lstadd(path, neighboor);
+			break ;
+		}
+		i++;
+	}
+	return (1);
+}
+
+
+t_list	*find_path(t_farm *farm, int *distances)
+{
+	t_list	*curr_room;
+	t_list	*path;
+	int	current;
+
+	path = NULL;
+	current = find_end(farm);
+	curr_room = ft_lstnew(&current, sizeof(current));
+	ft_lstadd(&path, curr_room);
+	while(current)
+	{
+		current = * (int *)path->content;
+		if (!check_distances(farm, &path, distances, current))
+			break ;
+	}
 	return (path);
 }
 
-int	find_path(t_farm *farm, int *distances)
+void	create_paths(t_farm *farm, int *distances)
 {
-	t_list	*current;
 	t_list	*path;
-	int	end;
-	/*
-	create new list using lstnew, lstadd
-	put end to the list
-	go to the beginning check if connected and distance -1
-	if start found return ok and save path
-	 */
-	path = NULL;
-	end = find_end(farm);
-	current = ft_lstnew(&end, sizeof(end));
-	//printf("current %d\n", * (int *)current->content);
-	ft_lstadd(&path, current);
-	while(path)
-	{
-		path = path->next;
-		while ()
-	}
 
-	return (1);
+	path = find_path(farm, distances);
+	while (path)
+	{
+		printf("%d\n", * (int *)path->content);
+		path = path->next;
+	}
 }
-	// for (int k = 0; k < farm->rooms_nb; k++)
-	// 	printf("%d\n", distances[k]);
