@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:24:25 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/26 12:34:52 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/27 14:40:43 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	set_distances(t_farm *farm, t_queue *q, int *distances, int *current)
 		if (is_connected(farm, i, row) && distances[i] == -1)
 		{
 			distances[i] = new_distance;
-			printf("room %s has distance: %d\n",farm->rooms[i], distances[i]);
+			// printf("room %s has distance: %d\n",farm->rooms[i], distances[i]);
 			*current = i;
 			put(q, i);
 		}
@@ -92,7 +92,10 @@ int	bfs(t_farm *farm, int *distances)
 		set_distances(farm, q, distances, &current);
 	}
 	if (!end_reached(farm, distances))
-		return (printf("No connections to finish found\n"));
+	{
+		printf("No connections to finish found\n");
+		return (0);
+	}
 	release_queue(q);
 	return (1);
 }
