@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/27 14:40:19 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/29 11:20:22 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	*new_distances(int size) {
 	return (result);
 }
 
-int	check_distances(t_farm *farm, t_list **path, int *distances, int current)
+int	check_connections(t_farm *farm, t_list **path, int *distances, int current)
 {
 	int	i;
 	int	row;
@@ -41,15 +41,17 @@ int	check_distances(t_farm *farm, t_list **path, int *distances, int current)
 	i = 0;
 	while ((i + row) < (farm->rooms_nb + row))
 	{
+		// printf("r1: %d d: %d, r2: %d d: %d\n", i, distances[i], current, distances[current]);
 		if (is_connected(farm, i, row) && distances[i] == distances[current] - 1)
 		{
+			// printf("HERE\n");
 			neighboor = ft_lstnew(&i, sizeof(i));
 			ft_lstadd(path, neighboor);
-			break ;
+			return (distances[i]) ;
 		}
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 t_list	*find_path(t_farm *farm, int *distances)
@@ -65,18 +67,21 @@ t_list	*find_path(t_farm *farm, int *distances)
 	while(current)
 	{
 		current = * (int *)path->content;
-		if (!check_distances(farm, &path, distances, current))
+		// printf("end %d\n", current);
+		if (!check_connections(farm, &path, distances, current))
 			break ;
 	}
 	return (path);
 }
 
+/* This runs find path 2nd time */
 void	found_paths(t_farm *farm, int *distances)
 {
 	t_list	*path;
 	int		room;
 	static int	found_paths;
 
+	path = NULL;
 	found_paths++;
 	printf("found path %d\n", found_paths);
 	path = find_path(farm, distances);
@@ -98,6 +103,7 @@ void	update_links(t_farm *farm, int *distances)
 	int		snd_room;
 	int		size;
 
+	path = NULL;
 	found_paths(farm ,distances);
 	size = farm->rooms_nb;
 	path = find_path(farm, distances);
