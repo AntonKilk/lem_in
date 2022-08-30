@@ -6,11 +6,11 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 08:47:59 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/24 19:34:13 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/29 16:21:53 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 void	parse_ants(char *line, t_farm *farm)
 {

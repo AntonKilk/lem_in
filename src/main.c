@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/29 10:06:13 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/30 08:27:44 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,17 @@
 int	main(void)
 {
 	t_farm	farm;
+	t_list	*paths;
 
 	parse(&farm);
 	print_mtx(&farm);
 	printf("BFS starts\n");
-
-	// bfs(&farm, distances);
-	find_all_paths(&farm);
+	paths = NULL;
+	find_all_paths(&farm, &paths);
 	print_mtx(&farm);
-	run_ants(&farm);
+	print_paths(&farm, paths);
+	run_ants(&farm, paths);
+	// free(farm);
+	// free(paths);
 	return (0);
 }

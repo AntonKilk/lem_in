@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/29 11:20:22 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/30 07:49:40 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ t_list	*find_path(t_farm *farm, int *distances)
 	while(current)
 	{
 		current = * (int *)path->content;
-		// printf("end %d\n", current);
 		if (!check_connections(farm, &path, distances, current))
 			break ;
 	}
@@ -75,16 +74,13 @@ t_list	*find_path(t_farm *farm, int *distances)
 }
 
 /* This runs find path 2nd time */
-void	found_paths(t_farm *farm, int *distances)
+void	found_paths(t_list *path)
 {
-	t_list	*path;
-	int		room;
+	int			room;
 	static int	found_paths;
 
-	path = NULL;
 	found_paths++;
 	printf("found path %d\n", found_paths);
-	path = find_path(farm, distances);
 	while (path)
 	{
 		room = * (int *)path->content;
@@ -96,7 +92,15 @@ void	found_paths(t_farm *farm, int *distances)
 	printf("\n");
 }
 
-void	update_links(t_farm *farm, int *distances)
+void	add2list(t_list **paths, t_list *path)
+{
+	t_list	*fst_path;
+
+	fst_path = ft_lstnew(&path, sizeof(t_list *));
+	ft_lstadd(paths, fst_path);
+}
+
+void	update_links(t_farm *farm, int *distances, t_list **paths)
 {
 	t_list	*path;
 	int		fst_room;
@@ -104,9 +108,10 @@ void	update_links(t_farm *farm, int *distances)
 	int		size;
 
 	path = NULL;
-	found_paths(farm ,distances);
 	size = farm->rooms_nb;
 	path = find_path(farm, distances);
+	found_paths(path);
+	add2list(paths, path);
 	while (path->next)
 	{
 		fst_room = * (int *)path->content;
@@ -118,7 +123,7 @@ void	update_links(t_farm *farm, int *distances)
 	}
 }
 
-void	find_all_paths(t_farm *farm)
+void	find_all_paths(t_farm *farm, t_list **paths)
 {
 	int	*distances;
 	int	found_paths;
@@ -126,7 +131,7 @@ void	find_all_paths(t_farm *farm)
 	distances = new_distances(farm->rooms_nb);
 	while (bfs(farm, distances))
 	{
-		update_links(farm, distances);
+		update_links(farm, distances, paths);
 		zero_distances(distances, farm->rooms_nb);
 	}
 	free(distances);

@@ -6,11 +6,11 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:29:44 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/25 08:54:42 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/29 16:21:32 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 void	fill_links(size_t size, t_farm *farm, char *fst, char *snd)
 {

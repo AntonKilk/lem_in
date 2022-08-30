@@ -6,11 +6,11 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:04:17 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/11 14:56:19 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/29 16:25:24 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 t_lst	*my_lstnew(void const *content)
 {

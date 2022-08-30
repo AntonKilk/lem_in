@@ -6,11 +6,11 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 14:51:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/01 14:53:16 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/29 16:23:05 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lem_in.h"
+#include "../../lem_in.h"
 
 int	is_number(char *line)
 {
