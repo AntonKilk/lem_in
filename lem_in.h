@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/30 08:28:28 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/31 10:04:19 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ typedef struct s_queue
 	int	tail;
 	int	data[0];
 }			t_queue;
+
+typedef struct s_path
+{
+	int		len;
+	t_list	*path;
+}			t_path;
 
 enum	state
 {

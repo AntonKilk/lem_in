@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/30 08:27:44 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/31 11:56:45 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(void)
 	find_all_paths(&farm, &paths);
 	print_mtx(&farm);
 	print_paths(&farm, paths);
-	run_ants(&farm, paths);
+	// run_ants(&farm, paths);
 	// free(farm);
 	// free(paths);
 	return (0);

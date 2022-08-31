@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/30 07:49:40 by akilk            ###   ########.fr       */
+/*   Updated: 2022/08/31 14:22:32 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	check_connections(t_farm *farm, t_list **path, int *distances, int current)
 	return (0);
 }
 
-t_list	*find_path(t_farm *farm, int *distances)
+t_list	*find_path(t_farm *farm, int *distances, int *len)
 {
 	t_list	*curr_room;
 	t_list	*path;
@@ -64,8 +64,10 @@ t_list	*find_path(t_farm *farm, int *distances)
 	current = find_end(farm);
 	curr_room = ft_lstnew(&current, sizeof(current));
 	ft_lstadd(&path, curr_room);
+	(*len)++;
 	while(current)
 	{
+		(*len)++;
 		current = * (int *)path->content;
 		if (!check_connections(farm, &path, distances, current))
 			break ;
@@ -73,31 +75,35 @@ t_list	*find_path(t_farm *farm, int *distances)
 	return (path);
 }
 
-/* This runs find path 2nd time */
-void	found_paths(t_list *path)
+// void	found_paths(t_list *path)
+// {
+// 	int			room;
+// 	static int	found_paths;
+
+// 	found_paths++;
+// 	printf("found path %d\n", found_paths);
+// 	while (path)
+// 	{
+// 		room = * (int *)path->content;
+// 		printf("%d", room);
+// 		if (path->next != NULL)
+// 			printf("-");
+// 		path = path->next;
+// 	}
+// 	printf("\n");
+// }
+
+void	add2list(t_list **paths, t_list *path, int len)
 {
-	int			room;
-	static int	found_paths;
+	t_list	*paths_item;
+	t_path	*tpath;
 
-	found_paths++;
-	printf("found path %d\n", found_paths);
-	while (path)
-	{
-		room = * (int *)path->content;
-		printf("%d", room);
-		if (path->next != NULL)
-			printf("-");
-		path = path->next;
-	}
-	printf("\n");
-}
-
-void	add2list(t_list **paths, t_list *path)
-{
-	t_list	*fst_path;
-
-	fst_path = ft_lstnew(&path, sizeof(t_list *));
-	ft_lstadd(paths, fst_path);
+	tpath = (t_path *)malloc(sizeof(t_path *));
+	tpath->path = path;
+	tpath->len = len;
+	paths_item = ft_lstnew(tpath, sizeof(t_path));
+	t_path *test = paths_item->content;
+	ft_lstadd(paths, paths_item);
 }
 
 void	update_links(t_farm *farm, int *distances, t_list **paths)
@@ -105,20 +111,20 @@ void	update_links(t_farm *farm, int *distances, t_list **paths)
 	t_list	*path;
 	int		fst_room;
 	int		snd_room;
-	int		size;
+	int		len;
+	static int	paths_found;
 
-	path = NULL;
-	size = farm->rooms_nb;
-	path = find_path(farm, distances);
-	found_paths(path);
-	add2list(paths, path);
+	len = 0;
+	path = find_path(farm, distances, &len);
+	add2list(paths, path, len);
+	paths_found++;
 	while (path->next)
 	{
 		fst_room = * (int *)path->content;
 		snd_room = * (int *)path->next->content;
 		// printf("1st: %d, 2nd:%d\n", fst_room, snd_room);
-		farm->links[fst_room * size + snd_room] = 0;
-		farm->links[snd_room * size + fst_room] = 0;
+		farm->links[fst_room * farm->rooms_nb + snd_room] = 0;
+		farm->links[snd_room * farm->rooms_nb + fst_room] = 0;
 		path = path->next;
 	}
 }
@@ -129,8 +135,10 @@ void	find_all_paths(t_farm *farm, t_list **paths)
 	int	found_paths;
 
 	distances = new_distances(farm->rooms_nb);
-	while (bfs(farm, distances))
+	int i = 0;
+	while (bfs(farm, distances) && i < 5)
 	{
+		i++;
 		update_links(farm, distances, paths);
 		zero_distances(distances, farm->rooms_nb);
 	}
