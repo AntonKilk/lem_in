@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/31 10:04:19 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/04 12:10:14 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ enum	state
 void	parse(t_farm *farm);
 void	read_state(enum state *line_state, char *line);
 int		main(void);
+int	error(char **str, char *msg);
 
 /* parse_rooms.c */
 t_lst	*my_lstnew(void const *content);
@@ -88,10 +89,10 @@ int	is_empty(t_queue *q);
 void	release_queue(t_queue *q);
 
 /* find_paths.c */
-void	find_all_paths(t_farm *farm, t_list **paths);
+int	find_all_paths(t_farm *farm, t_list **paths);
 
 /* run_ants.c */
-void	run_ants(t_farm *farm, t_list *paths);
-void	print_paths(t_farm *farm, t_list *paths); // for testing purpose
+void	print_paths(t_farm *farm, t_list *paths, int found_paths);
+void	calculate_routes(t_farm *farm, t_list *paths, int found_paths);
 
 #endif

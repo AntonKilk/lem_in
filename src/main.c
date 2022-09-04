@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/31 11:56:45 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/02 13:37:46 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,28 @@
 	//ToDo validate links with names
 	//ToDo: no single path from start to end
 
+int	error(char **str, char *msg)
+{
+	if (str)
+		ft_strdel(str);
+	ft_putendl_fd(msg, 2);
+	return (0);
+}
+
 int	main(void)
 {
 	t_farm	farm;
 	t_list	*paths;
+	int	found_paths;
 
 	parse(&farm);
 	print_mtx(&farm);
 	printf("BFS starts\n");
 	paths = NULL;
-	find_all_paths(&farm, &paths);
+	found_paths = find_all_paths(&farm, &paths);
 	print_mtx(&farm);
-	print_paths(&farm, paths);
+	// print_paths(&farm, paths, found_paths);
+	calculate_routes(&farm, paths, found_paths);
 	// run_ants(&farm, paths);
 	// free(farm);
 	// free(paths);

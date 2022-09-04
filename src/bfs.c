@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:24:25 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/29 08:17:48 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/04 12:39:52 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,16 @@ void	set_distances(t_farm *farm, t_queue *q, int *distances, int *current)
 		i++;
 	}
 }
+
+/*
+** Bread First Search (BFS).
+** We assign distance of 0 to START room.
+** From START we move to linked rooms assigning them distance +1
+** unless we reach END.
+** We use two-directional linked list queue adding new linked rooms
+** to the end of queue and getting rooms from beginning of list.
+** If we cannot reach END or there is no rooms left in queue we quit.
+*/
 
 int	bfs(t_farm *farm, int *distances)
 {

@@ -6,11 +6,15 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/31 14:22:32 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/04 12:31:57 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
+
+/*
+** Assign -1 to all rooms' distances(levels)
+*/
 
 void	zero_distances(int *result, int size)
 {
@@ -21,15 +25,26 @@ void	zero_distances(int *result, int size)
 		result[i] = -1;
 }
 
+/*
+** Create array of ints to keep rooms' distances from START.
+** Default is -1. Distances are assigned during Breadth First Search (BFS).
+*/
+
 int	*new_distances(int size) {
 	int *result;
 
 	result = malloc(sizeof(int *) * size);
 	if (!result)
-		return (NULL); //add error h
+		return (NULL);
 	zero_distances(result, size);
 	return (result);
 }
+
+/*
+** In next two functions, we move from END to START checking all rooms that
+** they are connected to current room and have a distance: current - 1;
+** This way we create a path from END to START.
+*/
 
 int	check_connections(t_farm *farm, t_list **path, int *distances, int current)
 {
@@ -44,7 +59,6 @@ int	check_connections(t_farm *farm, t_list **path, int *distances, int current)
 		// printf("r1: %d d: %d, r2: %d d: %d\n", i, distances[i], current, distances[current]);
 		if (is_connected(farm, i, row) && distances[i] == distances[current] - 1)
 		{
-			// printf("HERE\n");
 			neighboor = ft_lstnew(&i, sizeof(i));
 			ft_lstadd(path, neighboor);
 			return (distances[i]) ;
@@ -93,6 +107,11 @@ t_list	*find_path(t_farm *farm, int *distances, int *len)
 // 	printf("\n");
 // }
 
+
+/*
+** We pack path as structure (t_path) to the list of paths.
+*/
+
 void	add2list(t_list **paths, t_list *path, int len)
 {
 	t_list	*paths_item;
@@ -101,10 +120,16 @@ void	add2list(t_list **paths, t_list *path, int len)
 	tpath = (t_path *)malloc(sizeof(t_path *));
 	tpath->path = path;
 	tpath->len = len;
-	paths_item = ft_lstnew(tpath, sizeof(t_path));
+	paths_item = ft_lstnew(tpath, sizeof(*tpath));
 	t_path *test = paths_item->content;
 	ft_lstadd(paths, paths_item);
 }
+
+/*
+** After each BFS and DFS (done in function find_path()), we update the
+** adjustment matrix that contains links between rooms. We assign 0 to those
+** links that are used in found path.
+*/
 
 void	update_links(t_farm *farm, int *distances, t_list **paths)
 {
@@ -112,12 +137,10 @@ void	update_links(t_farm *farm, int *distances, t_list **paths)
 	int		fst_room;
 	int		snd_room;
 	int		len;
-	static int	paths_found;
 
 	len = 0;
 	path = find_path(farm, distances, &len);
 	add2list(paths, path, len);
-	paths_found++;
 	while (path->next)
 	{
 		fst_room = * (int *)path->content;
@@ -129,18 +152,26 @@ void	update_links(t_farm *farm, int *distances, t_list **paths)
 	}
 }
 
-void	find_all_paths(t_farm *farm, t_list **paths)
+/*
+** We go with BFS finding distances of rooms from START to END
+** then we go back from END to START with DFS finding path and closing
+** links of used path as long as there is no paths left between START and END.
+** We know that because there won't be distances steps in BFS.
+*/
+
+int	find_all_paths(t_farm *farm, t_list **paths)
 {
 	int	*distances;
 	int	found_paths;
 
 	distances = new_distances(farm->rooms_nb);
-	int i = 0;
-	while (bfs(farm, distances) && i < 5)
+	found_paths = 0;
+	while (bfs(farm, distances))
 	{
-		i++;
 		update_links(farm, distances, paths);
 		zero_distances(distances, farm->rooms_nb);
+		found_paths++;
 	}
 	free(distances);
+	return (found_paths);
 }
