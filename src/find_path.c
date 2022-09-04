@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/04 12:31:57 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/04 20:23:55 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	update_links(t_farm *farm, int *distances, t_list **paths)
 		snd_room = * (int *)path->next->content;
 		// printf("1st: %d, 2nd:%d\n", fst_room, snd_room);
 		farm->links[fst_room * farm->rooms_nb + snd_room] = 0;
-		farm->links[snd_room * farm->rooms_nb + fst_room] = 0;
+		farm->links[snd_room * farm->rooms_nb + fst_room] = -1;
 		path = path->next;
 	}
 }
