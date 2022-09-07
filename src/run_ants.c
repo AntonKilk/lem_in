@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 08:12:56 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/03 15:57:45 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/07 09:48:51 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,21 @@ void	get_paths(t_farm *farm, t_list *paths, int found_paths)
 	ft_memset(farm->links, 0, farm->rooms_nb);
 	ft_lstrev(&paths);
 	paths_ptr = paths;
-	while (paths_ptr)
+	i = 0;
+	while (paths_ptr && ++i)
 	{
-		path = get_path_from_paths(paths_ptr);
+ 		path = get_path_from_paths(paths_ptr);
 		path_ptr = path->path;
-		printf("path length: %d\n", path->len);
-		i = 0;
+		printf("Path: %d Length: %d\n", i, path->len);
+
 		while (path_ptr)
 		{
 			room = get_room_from_path(path_ptr);
-			printf("r: %s\n", farm->rooms[room]);
+			printf("%s", farm->rooms[room]);
+			if (path_ptr->next)
+				printf("->");
+			else
+				printf("\n");
 			path_ptr = path_ptr->next;
 		}
 		paths_ptr = paths_ptr->next;

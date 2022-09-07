@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/04 12:10:14 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/04 20:31:42 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	parse_links(char **line, t_farm *farm, enum state *state);
 void	print_mtx(t_farm *farm);
 
 /* bfs.c */
+int	find_start(t_farm *farm);
 int	find_end(t_farm *farm);
 int	is_connected(t_farm *farm, int fst, int snd);
 int	bfs(t_farm *farm, int *distances);

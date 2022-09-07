@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:24:25 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/04 12:39:52 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/06 13:49:50 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	end_reached(t_farm *farm, int *distances)
 
 int	is_connected(t_farm *farm, int fst, int snd)
 {
-	if (farm->links[fst + snd] == 1)
+	if (farm->links[fst + snd] == 1 || farm->links[fst + snd] == -1)
 		return (1);
 	return (0);
 }
