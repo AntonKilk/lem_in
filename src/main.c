@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/02 13:37:46 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/12 14:01:38 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(void)
 	printf("BFS starts\n");
 	paths = NULL;
 	found_paths = find_all_paths(&farm, &paths);
-	print_mtx(&farm);
+	// print_mtx(&farm);
 	// print_paths(&farm, paths, found_paths);
 	calculate_routes(&farm, paths, found_paths);
 	// run_ants(&farm, paths);
