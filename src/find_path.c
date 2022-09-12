@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/07 10:12:54 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/09 11:07:42 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	not_in_list(int nb, t_list *path)
 {
 	while (path)
 	{
-		printf ("nb current: %d, nb in list:%d\n", nb, * (int *)path->content);
+		// printf ("nb current: %d, nb in list:%d\n", nb, * (int *)path->content);
 		if (nb == * (int *)path->content)
 			return (0);
 		path = path->next;
@@ -68,17 +68,17 @@ int	check_connections(t_farm *farm, t_list **path, int *distances, int current)
 	i = 0;
 	while ((i + row) < (farm->rooms_nb + row))
 	{
-		if (is_connected(farm, i, row) && not_in_list(i, *path)) // && distances[i] == distances[current] + 1
+		if (is_connected(farm, i, row) && not_in_list(i, *path) && distances[i] == distances[current] -1) // && distances[i] == distances[current] + 1
 		{
 			// printf("r1: %d d: %d, r2: %d d: %d\n", i, distances[i], current,distances[current]);
 			// printf("current link:%d\n", farm->links[current * farm->rooms_nb + i]);
-			farm->links[current * farm->rooms_nb + i] = 0;
-			if (current == find_start(farm) || i == find_end(farm))
-				farm->links[i * farm->rooms_nb + current] = 0;
+			farm->links[i * farm->rooms_nb + current] = 0;
+			if (current == find_end(farm) || i == find_start(farm))
+				farm->links[current * farm->rooms_nb + i] = 0;
 			else
-				farm->links[i * farm->rooms_nb + current] = -1;
+				farm->links[current * farm->rooms_nb + i] = -1;
 
-			printf("added to list:%d\n", i);
+			// printf("added to list:%d\n", i);
 			neighboor = ft_lstnew(&i, sizeof(i));
 			ft_lstadd(path, neighboor);
 			return (i) ;
@@ -115,24 +115,19 @@ t_list	*find_path(t_farm *farm, int *distances, t_list **paths)
 
 	len = 0;
 	path = NULL;
-	current = find_start(farm);
-	end = find_end(farm);
+	current = find_end(farm);
 	curr_room = ft_lstnew(&current, sizeof(current));
 	ft_lstadd(&path, curr_room);
 	len++;
-	printf("cur: %d, %d\n", current, distances[current]);
-	printf("end: %d, %d\n", end, distances[end]);
-	int i = 0;
-	while(1 && i < farm->rooms_nb)
+	printf("curr room: %s, %d\n", farm->rooms[current], distances[current]);
+	while(current)
 	{
-		i++;
 		len++;
 		current = * (int *)path->content;
-		printf("cur in : %d, %d\n", current, distances[current]);
-		if (check_connections(farm, &path, distances, current) == end)
+		// printf("cur in : %d, %d\n", current, distances[current]);
+		if (!check_connections(farm, &path, distances, current))
 			break ;
 	}
-	ft_lstrev(&path);
 
 	add2list(paths, path, len);
 	return (path);

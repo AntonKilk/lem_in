@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:24:25 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/06 13:49:50 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/09 11:04:33 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	is_connected(t_farm *farm, int fst, int snd)
 	return (0);
 }
 
-//function to set distances for connected rooms
+//this function is used  each step during BFS to set distances for connected rooms + 1 from current room
 void	set_distances(t_farm *farm, t_queue *q, int *distances, int *current)
 {
 	int	i;
@@ -69,7 +69,7 @@ void	set_distances(t_farm *farm, t_queue *q, int *distances, int *current)
 		if (is_connected(farm, i, row) && distances[i] == -1)
 		{
 			distances[i] = new_distance;
-			// printf("room %s has distance: %d\n",farm->rooms[i], distances[i]);
+			printf("room %s has distance: %d\n",farm->rooms[i], distances[i]);
 			*current = i;
 			put(q, i);
 		}
@@ -78,7 +78,7 @@ void	set_distances(t_farm *farm, t_queue *q, int *distances, int *current)
 }
 
 /*
-** Bread First Search (BFS).
+** Breadth First Search (BFS).
 ** We assign distance of 0 to START room.
 ** From START we move to linked rooms assigning them distance +1
 ** unless we reach END.

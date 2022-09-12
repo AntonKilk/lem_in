@@ -6,11 +6,19 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:08:11 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/25 10:04:11 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/09 10:37:10 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
+
+/*
+** Helper functions to work with two-directional list - queue
+** Create new queue, add to end new item,
+** take an item from begining of queue,
+** check if empty and release the queue.
+** Used in Breadth-first search(BFS).
+*/
 
 t_queue *new_queue(int size) {
 	t_queue *result;
