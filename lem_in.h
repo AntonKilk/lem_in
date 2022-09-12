@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 16:30:35 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/12 17:43:34 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ typedef struct s_queue
 	int	tail;
 	int	data[0];
 }			t_queue;
+
+typedef struct s_solution
+{
+	int	n_paths;
+	int	*data;
+	int	*lengths;
+	int	*starts;
+}			t_solution;
 
 typedef struct s_path
 {

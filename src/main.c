@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 14:01:38 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/12 17:45:23 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(void)
 {
 	t_farm	farm;
 	t_list	*paths;
+
 	int	found_paths;
 
 	parse(&farm);
