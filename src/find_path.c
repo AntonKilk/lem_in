@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 15:09:21 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/12 16:44:21 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_connections(t_farm *farm, t_list **path, int *distances, int current)
 	i = 0;
 	while ((i + row) < (farm->rooms_nb + row))
 	{
-		if (is_connected(farm, i, row) && not_in_list(i, *path)) // && distances[i] == distances[current] -1
+		if (is_connected(farm, i, row)) // && distances[i] == distances[current] -1
 		{
 			// printf("r1: %d d: %d, r2: %d d: %d\n", i, distances[i], current,distances[current]);
 			// printf("current link:%d\n", farm->links[current * farm->rooms_nb + i]);
@@ -48,7 +48,21 @@ int	check_connections(t_farm *farm, t_list **path, int *distances, int current)
 	return (0);
 }
 
-t_list	*find_path(t_farm *farm, int *distances, t_list **paths)
+void	fill_visited(t_list *path, int *visited)
+{
+	int	i;
+
+	i = * (int *)path->content;
+	while (path->next)
+	{
+		path = path->next;
+		visited[i] = * (int *)path->content;
+		printf("visited[%d]: %d\n", i, visited[i]);
+		i = visited[i];
+	}
+}
+
+t_list	*find_path(t_farm *farm, int *distances, t_list **paths, int *visited)
 {
 	t_list	*curr_room;
 	t_list	*path;
@@ -71,7 +85,7 @@ t_list	*find_path(t_farm *farm, int *distances, t_list **paths)
 		if (!check_connections(farm, &path, distances, current))
 			break ;
 	}
-
+	fill_visited(path, visited);
 	add2list(paths, path, len);
 	return (path);
 }
@@ -93,14 +107,16 @@ int	find_all_paths(t_farm *farm, t_list **paths)
 {
 	int	*distances;
 	int	found_paths;
+	int	*visited;
 
-	distances = new_distances(farm->rooms_nb);
+	visited = new_int_arr(farm->rooms_nb);
+	distances = new_int_arr(farm->rooms_nb);
 	found_paths = 0;
 	while (bfs(farm, distances))
 	{
-		find_path(farm, distances, paths);
+		find_path(farm, distances, paths, visited);
 		print_mtx(farm);
-		zero_distances(distances, farm->rooms_nb);
+		zero_arr(distances, farm->rooms_nb);
 		found_paths++;
 	}
 	free(distances);

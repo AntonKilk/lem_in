@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 14:37:36 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/12 16:30:35 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	release_queue(t_queue *q);
 int	find_all_paths(t_farm *farm, t_list **paths);
 
 /* find_path_helpers.c */
-void	zero_distances(int *result, int size);
-int	*new_distances(int size);
+void	zero_arr(int *result, int size);
+int	*new_int_arr(int size);
 int	not_in_list(int nb, t_list *path);
 void	add2list(t_list **paths, t_list *path, int len);
 

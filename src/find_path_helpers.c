@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:34:20 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 14:35:54 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/12 15:41:56 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 /*
 ** Assign -1 to all rooms' distances(levels)
+** Used for all_rooms as well.
 */
 
-void	zero_distances(int *result, int size)
+void	zero_arr(int *result, int size)
 {
 	int	i;
 
@@ -30,13 +31,13 @@ void	zero_distances(int *result, int size)
 ** Default is -1. Distances are assigned during Breadth First Search (BFS).
 */
 
-int	*new_distances(int size) {
+int	*new_int_arr(int size) {
 	int *result;
 
 	result = malloc(sizeof(int *) * size);
 	if (!result)
 		return (NULL);
-	zero_distances(result, size);
+	zero_arr(result, size);
 	return (result);
 }
 
