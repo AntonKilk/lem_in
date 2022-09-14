@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/14 10:03:25 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/14 12:56:11 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,39 @@ int	count_links(t_farm *farm, int node)
 	return (sum);
 }
 
-void	add2arr(t_solution *solution, int next, int length)
+int	find_lengths(t_solution *solution, t_farm *farm)
 {
-	int i = 0;
+	int	length;
+	int	i;
 
-	while(i < length)
+	i = 0;
+	length = 0;
+	// printf("\n");
+	while(i < farm->rooms_nb)
 	{
-		if (solution->starts[i] == -1)
-		{
-			solution->starts[i] = next;
-			return ;
-		}
+		// printf("%d ", solution->data[i]);
+		if (solution->data[i] != -1)
+			length++;
 		i++;
 	}
+	// printf("\n");
+	return(length);
+}
+
+void	print_path(t_solution *solution, t_farm *farm)
+{
+	int	i;
+
+	i = 0;
+	printf("\n");
+	while(i < farm->rooms_nb)
+	{
+
+		if (solution->data[i] != -1)
+			printf("%s-", farm->rooms[solution->data[i]]);
+		i++;
+	}
+	printf("\n");
 }
 
 int	solve_from(int current, t_farm *farm, t_solution *solution)
@@ -82,27 +102,28 @@ int	solve_from(int current, t_farm *farm, t_solution *solution)
 	int	start;
 	int	end;
 	int	next;
-	int result = 0;
-	int links = count_links(farm, start);
+	int	result = 0;
 
 	start = find_start(farm);
 	end = find_end(farm);
+	next = 0;
 	if (!current)
 		current = start;
-	next = 0;
 	while (next < farm->rooms_nb)
 	{
 		if(connected(farm, current, next))
 		{
-			if (solution->data[next] != -1 || next== start)
+			if (solution->data[next] != -1 || next == start)
 			{
 				next++;
 				continue ;
 			}
-			printf("Trying link %s -> %s\n", farm->rooms[current], farm->rooms[next]);
+			// printf("Trying link %s -> %s\n", farm->rooms[current], farm->rooms[next]);
 			if (next == end)
 			{
 				printf("END REACHED\n");
+				printf("path length: %d\n", find_lengths(solution, farm));
+				print_path(solution, farm);
 				return (0);
 				// bubble_sort(solution->lengths)
 				// solution->data[current] = end;
@@ -110,10 +131,17 @@ int	solve_from(int current, t_farm *farm, t_solution *solution)
 			}
 			else
 			{
-				if (current == start)
-					add2arr(solution, next, links);
-				else
-					solution->data[current] = next;
+				// if (current == start)
+				// {
+				// 	int k = 0;
+				// 	while (solution->starts[k] != -1)
+				// 	{
+				// 		next = solution->starts[k] + 1;
+				// 		k++;
+				// 	}
+				// }
+				// else
+				solution->data[current] = next;
 
 				result = solve_from(next, farm, solution); //infinite loop?
 				if (current == start)
