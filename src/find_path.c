@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 16:44:21 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/13 11:30:55 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,54 +89,3 @@ t_list	*find_path(t_farm *farm, int *distances, t_list **paths, int *visited)
 	add2list(paths, path, len);
 	return (path);
 }
-
-/*
-** After each BFS and DFS (done in function find_path()), we update the
-** adjustment matrix that contains links between rooms. We assign 0 to those
-** links that are used in found path.
-*/
-
-/*
-** We go with BFS finding distances of rooms from START to END
-** then we go back from END to START with DFS finding path and closing
-** links of used path as long as there is no paths left between START and END.
-** We know that because there won't be distances steps in BFS.
-*/
-
-int	find_all_paths(t_farm *farm, t_list **paths)
-{
-	int	*distances;
-	int	found_paths;
-	int	*visited;
-
-	visited = new_int_arr(farm->rooms_nb);
-	distances = new_int_arr(farm->rooms_nb);
-	found_paths = 0;
-	while (bfs(farm, distances))
-	{
-		find_path(farm, distances, paths, visited);
-		print_mtx(farm);
-		zero_arr(distances, farm->rooms_nb);
-		found_paths++;
-	}
-	free(distances);
-	return (found_paths);
-}
-
-// void	found_paths(t_list *path)
-// {
-// 	int			room;
-// 	static int	found_paths;
-
-// 	found_paths++;
-// 	printf("found path %d\n", found_paths);
-// 	while (path)
-// 	{
-// 		room = * (int *)path->content;
-// 		printf("%d", room);
-// 		if (path->next != NULL)
-// 			printf("-");
-// 		path = path->next;
-// 	}
-// 	printf("\n");
-// }

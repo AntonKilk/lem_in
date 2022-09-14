@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 17:43:34 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/13 15:01:58 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,11 @@ void	add2list(t_list **paths, t_list *path, int len);
 /* run_ants.c */
 void	print_paths(t_farm *farm, t_list *paths, int found_paths);
 void	calculate_routes(t_farm *farm, t_list *paths, int found_paths);
+
+/* find_solution.c */
+int	solve(t_solution *solution, t_farm *farm);
+
+/* bubble_sort.c */
+int bubble_sort(int *tab, int size);
 
 #endif

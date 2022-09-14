@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 17:45:23 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/13 12:56:16 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,16 @@ int	error(char **str, char *msg)
 int	main(void)
 {
 	t_farm	farm;
-	t_list	*paths;
-
 	int	found_paths;
+	t_solution	solution;
 
 	parse(&farm);
 	print_mtx(&farm);
-	printf("BFS starts\n");
-	paths = NULL;
-	found_paths = find_all_paths(&farm, &paths);
+	printf("FIND SOLUTION\n");
+	solve(&solution, &farm);
 	// print_mtx(&farm);
 	// print_paths(&farm, paths, found_paths);
-	calculate_routes(&farm, paths, found_paths);
+
 	// run_ants(&farm, paths);
 	// free(farm);
 	// free(paths);

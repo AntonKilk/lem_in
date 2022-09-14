@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:34:20 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 15:41:56 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/13 12:12:18 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,4 @@ int	not_in_list(int nb, t_list *path)
 		path = path->next;
 	}
 	return (1);
-}
-
-/*
-** We pack path as structure (t_path) to the list of paths.
-*/
-
-void	add2list(t_list **paths, t_list *path, int len)
-{
-	t_list	*paths_item;
-	t_path	*tpath;
-
-	tpath = (t_path *)malloc(sizeof(t_path *));
-	tpath->path = path;
-	tpath->len = len;
-	paths_item = ft_lstnew(tpath, sizeof(*tpath));
-	t_path *test = paths_item->content;
-	ft_lstadd(paths, paths_item);
 }
