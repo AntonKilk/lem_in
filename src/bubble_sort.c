@@ -6,19 +6,11 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 14:58:04 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/13 15:01:25 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/18 20:34:24 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lem_in.h"
-
-void ft_swap(int *a, int *b)
-{
-    int temp;
-    temp = *a;
-    *a = *b;
-    *b = temp;
-}
 
 int bubble_sort(int *tab, int size)
 {

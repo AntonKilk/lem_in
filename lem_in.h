@@ -6,13 +6,13 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/13 15:01:58 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/18 20:47:54 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
-// # define BUFF_SIZE 1000000
+# define MAX_INT 2147483647
 
 # include "libft/libft.h"
 # include <fcntl.h>
@@ -112,6 +112,7 @@ void	calculate_routes(t_farm *farm, t_list *paths, int found_paths);
 
 /* find_solution.c */
 int	solve(t_solution *solution, t_farm *farm);
+int	solve_from(int current, t_farm *farm, t_solution *solution);
 
 /* bubble_sort.c */
 int bubble_sort(int *tab, int size);

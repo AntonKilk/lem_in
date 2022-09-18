@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:34:20 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/13 12:12:18 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/18 18:04:50 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ void	zero_arr(int *result, int size)
 {
 	int	i;
 
-	i = -1;
-	while (++i < size)
+	i = 0;
+	while (i < size)
+	{
 		result[i] = -1;
+		i++;
+	}
 }
 
 /*
