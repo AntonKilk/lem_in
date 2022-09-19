@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/13 12:56:16 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/19 10:45:05 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	error(char **str, char *msg)
 int	main(void)
 {
 	t_farm	farm;
-	int	found_paths;
-	t_solution	solution;
+	t_solution	*solution;
 
 	parse(&farm);
 	print_mtx(&farm);
 	printf("FIND SOLUTION\n");
-	solve(&solution, &farm);
+
+	solve(&farm);
 	// print_mtx(&farm);
 	// print_paths(&farm, paths, found_paths);
 

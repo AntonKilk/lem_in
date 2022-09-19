@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/18 20:48:14 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/19 10:57:35 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	find_start(t_farm *farm)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < farm->rooms_nb)
@@ -28,7 +28,7 @@ int	find_start(t_farm *farm)
 
 int	find_end(t_farm *farm)
 {
-	size_t	i;
+	int	i;
 
 	i= 0;
 	while (i < farm->rooms_nb)
@@ -78,12 +78,25 @@ void	find_lengths(t_solution *solution, t_farm *farm)
 
 	i = 0;
 	length = 0;
+	//for printing:
+	printf("%s-", farm->start);
+	int flag = 0;
+	int end = find_end(farm);
+	printf("LINE %d\n", __LINE__);
 	while(i < farm->rooms_nb)
 	{
 		if (solution->data[i] != -1)
 		{
+			// for printing:
+			if (flag == 0)
+			{
+				printf("%s-", farm->rooms[i]);
+				flag = 1;
+			}
 			length++;
-			printf("|%s|", farm->rooms[solution->data[i]]);
+			printf("%s", farm->rooms[solution->data[i]]);
+			if (solution->data[i] != end)
+				printf("-");
 		}
 		i++;
 	}
@@ -136,6 +149,13 @@ int	evaluate_solution(t_farm *farm, t_solution *solution)
 	int	max_paths = max_paths_nb(farm);
 	bubble_sort(solution->lengths, max_paths);
 	// result = evaluate(solution->lengths);
+	for (size_t i = 0; i < max_paths; i++)
+	{
+		if (solution->starts[i] != -1)
+			printf("Reached end. Starts:%s\n", farm->rooms[solution->starts[i]]);
+		i++;
+	}
+
 	int i = 0;
 	while (solution->starts[i] != -1)
 		i++;
@@ -161,61 +181,70 @@ int	solve_from(int current, t_farm *farm, t_solution *solution)
 	start = find_start(farm);
 	end = find_end(farm);
 	next = 0;
-	while (next < farm->rooms_nb)
+
+	for (size_t i = 0; i < farm->rooms_nb; i++)
 	{
-		if(connected(farm, current, next))
-		{
-			if (solution->data[next] != -1 || next == start)
-			{
-				next++;
-				continue ;
-			}
-			printf("Trying link %s -> %s\n", farm->rooms[current], farm->rooms[next]);
-			if (next == end)
-			{
-				printf("END REACHED\n");
-				// print_path(solution, farm);
-				solution->data[current] = next;
-				find_lengths(solution, farm);
-				//vot tut nado peredat tekushij path
-				result = evaluate_solution(farm, solution);
-			}
-			else
-			{
-				if (current == start)
-				{
-					solution->starts[solution->n_paths] = next;
-					solution->n_paths++;
-				}
-				else
-					solution->data[current] = next;
-				result = solve_from(next, farm, solution);
-				// printf("current after recursion: %s\n", farm->rooms[current]);
-				if (current == start)
-				{
-					next = get_next_from_starts(solution);
-				}
-				else
-				{
-					solution->data[current] = -1;
-				}
-			}
-		}
-		next++;
+		printf("d:%d\n", solution->data[i]);
 	}
+
+	// while (next < farm->rooms_nb)
+	// {
+	// 	if(connected(farm, current, next))
+	// 	{
+	// 		if (solution->data[next] != -1 || next == start)
+	// 		{
+	// 			next++;
+	// 			continue ;
+	// 		}
+	// 		printf("Trying link %s -> %s\n", farm->rooms[current], farm->rooms[next]);
+	// 		if (next == end)
+	// 		{
+	// 			// print_path(solution, farm);
+	// 			printf("LINE %d\n", __LINE__);
+	// 			solution->data[current] = next;
+	// 			find_lengths(solution, farm);
+	// 			//vot tut nado peredat tekushij path
+	// 			result = evaluate_solution(farm, solution);
+	// 		}
+	// 		else
+	// 		{
+	// 			if (current == start)
+	// 			{
+	// 				solution->starts[solution->n_paths] = next;
+	// 				solution->n_paths++;
+	// 			}
+	// 			else
+	// 				solution->data[current] = next;
+	// 			result = solve_from(next, farm, solution);
+	// 			// printf("current after recursion: %s\n", farm->rooms[current]);
+	// 			if (current == start)
+	// 			{
+	// 				next = get_next_from_starts(solution);
+	// 			}
+	// 			else
+	// 			{
+	// 				solution->data[current] = -1;
+	// 			}
+	// 		}
+	// 	}
+	// 	next++;
+	// }
 	return (0);
 }
 
-int	solve(t_solution *solution, t_farm *farm)
+int	solve(t_farm *farm)
 {
 	int	result;
 	int	start;
 	int	start_links;
+	t_solution *solution;
 
+	solution = (t_solution *)malloc(sizeof(t_solution *));
+	ft_bzero(solution, sizeof(*solution));
 	result = MAX_INT;
 	start = find_start(farm);
 	start_links = count_links(farm, start);
-	solution = (t_solution *)malloc(sizeof(t_solution *));
+	printf("rooms nb: %d\n", farm->rooms_nb);
 	solution->data = new_int_arr(farm->rooms_nb);
 	solution->n_paths = 0;
 	solution->starts = new_int_arr(start_links);

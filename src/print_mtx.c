@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 11:51:29 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/25 08:56:57 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/19 07:06:50 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 	where room[i] connected to room[j] if links[i][j] == 1 */
 void	print_mtx(t_farm *farm)
 {
-	size_t	size;
+	int	size;
 
 	size = farm->rooms_nb;
-	printf("print matrix with size: %zu\n", size);
+	printf("print matrix with size: %d\n", size);
 	int i = 0;
 	printf("|-> ");
 	while (i < size)

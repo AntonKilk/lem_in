@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:04:17 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/29 16:25:24 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/19 06:41:58 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	my_lstadd(t_lst **alst, t_lst *new)
 
 void	parse_rooms(t_lst *room_lst, t_farm *farm)
 {
-	size_t	size;
+	int	size;
 
 	size = farm->rooms_nb;
 	farm->rooms = (char **)malloc(sizeof (char *) * (size + 1));

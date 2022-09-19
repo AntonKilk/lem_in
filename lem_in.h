@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/18 20:47:54 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/19 10:45:26 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ typedef struct s_lst
 
 typedef struct s_farm
 {
-	size_t	ants;
-	size_t	rooms_nb;
+	int		ants;
+	int		rooms_nb;
 	char	*start;
 	char	*end;
 	char	**rooms;
 	int		*links;
 }				t_farm;
 
-typedef struct s_queue
-{
-	int	head;
-	int	tail;
-	int	data[0];
-}			t_queue;
+// typedef struct s_queue
+// {
+// 	int	head;
+// 	int	tail;
+// 	int	data[0];
+// }			t_queue;
 
 typedef struct s_solution
 {
@@ -51,11 +51,11 @@ typedef struct s_solution
 	int	*starts;
 }			t_solution;
 
-typedef struct s_path
-{
-	int		len;
-	t_list	*path;
-}			t_path;
+// typedef struct s_path
+// {
+// 	int		len;
+// 	t_list	*path;
+// }			t_path;
 
 enum	state
 {
@@ -84,19 +84,6 @@ void	parse_links(char **line, t_farm *farm, enum state *state);
 /* print_mtx.c */
 void	print_mtx(t_farm *farm);
 
-/* bfs.c */
-int	find_start(t_farm *farm);
-int	find_end(t_farm *farm);
-int	is_connected(t_farm *farm, int fst, int snd);
-int	bfs(t_farm *farm, int *distances);
-
-/* queue helpers.c */
-t_queue *new_queue(int size);
-void	put(t_queue *q, int item);
-int	get(t_queue *q);
-int	is_empty(t_queue *q);
-void	release_queue(t_queue *q);
-
 /* find_path.c */
 int	find_all_paths(t_farm *farm, t_list **paths);
 
@@ -111,7 +98,7 @@ void	print_paths(t_farm *farm, t_list *paths, int found_paths);
 void	calculate_routes(t_farm *farm, t_list *paths, int found_paths);
 
 /* find_solution.c */
-int	solve(t_solution *solution, t_farm *farm);
+int	solve(t_farm *farm);
 int	solve_from(int current, t_farm *farm, t_solution *solution);
 
 /* bubble_sort.c */

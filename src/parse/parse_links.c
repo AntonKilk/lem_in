@@ -6,13 +6,13 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:29:44 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/04 20:22:43 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/19 07:03:43 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../lem_in.h"
 
-void	fill_links(size_t size, t_farm *farm, char *fst, char *snd)
+void	fill_links(int size, t_farm *farm, char *fst, char *snd)
 {
 	int	w;
 	int	h;
@@ -41,7 +41,7 @@ void	fill_links(size_t size, t_farm *farm, char *fst, char *snd)
 	farm->links[w * size + h] = 1;
 }
 
-void	get_links(size_t size, char *line, t_farm *farm)
+void	get_links(int size, char *line, t_farm *farm)
 {
 	char	*fst;
 	char	*snd;
@@ -62,10 +62,10 @@ void	get_links(size_t size, char *line, t_farm *farm)
 
 void	parse_links(char **line, t_farm *farm, enum state *state)
 {
-	size_t	size;
+	int	size;
 
 	size = farm->rooms_nb;
-	farm->links = (int *)malloc(sizeof (int *) * (size * size));
+	farm->links = (int *)malloc(sizeof (int) * (size * size));
 	if (!farm->links)
 		return ; // add error func
 	ft_memset(farm->links, 0, size * size);

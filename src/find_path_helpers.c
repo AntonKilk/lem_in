@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:34:20 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/18 18:04:50 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/19 06:56:52 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ void	zero_arr(int *result, int size)
 ** Default is -1. Distances are assigned during Breadth First Search (BFS).
 */
 
-int	*new_int_arr(int size) {
+int	*new_int_arr(int size)
+{
 	int *result;
 
-	result = malloc(sizeof(int *) * size);
+	result = (int *)malloc(sizeof(int) * size);
 	if (!result)
 		return (NULL);
 	zero_arr(result, size);
