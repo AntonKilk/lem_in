@@ -56,6 +56,7 @@ def find_lengths(starts, solution):
             l += 1
             s = solution[s]
         result.append(l)
+    print("Length:", l)
     return result
 
 def evaluate(lengths):

@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/19 10:45:26 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/22 14:29:02 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,12 @@ typedef struct s_farm
 {
 	int		ants;
 	int		rooms_nb;
+	int		start_links;
 	char	*start;
 	char	*end;
 	char	**rooms;
 	int		*links;
 }				t_farm;
-
-// typedef struct s_queue
-// {
-// 	int	head;
-// 	int	tail;
-// 	int	data[0];
-// }			t_queue;
 
 typedef struct s_solution
 {
@@ -51,11 +45,13 @@ typedef struct s_solution
 	int	*starts;
 }			t_solution;
 
-// typedef struct s_path
-// {
-// 	int		len;
-// 	t_list	*path;
-// }			t_path;
+typedef struct s_best
+{
+	int	result;
+	int	*solution;
+	int	*starts;
+}			t_best;
+
 
 enum	state
 {
@@ -71,7 +67,7 @@ enum	state
 void	parse(t_farm *farm);
 void	read_state(enum state *line_state, char *line);
 int		main(void);
-int	error(char **str, char *msg);
+int		error(char **str, char *msg);
 
 /* parse_rooms.c */
 t_lst	*my_lstnew(void const *content);
@@ -84,18 +80,16 @@ void	parse_links(char **line, t_farm *farm, enum state *state);
 /* print_mtx.c */
 void	print_mtx(t_farm *farm);
 
-/* find_path.c */
-int	find_all_paths(t_farm *farm, t_list **paths);
-
-/* find_path_helpers.c */
+/* find_solution_helpers.c */
 void	zero_arr(int *result, int size);
 int	*new_int_arr(int size);
-int	not_in_list(int nb, t_list *path);
-void	add2list(t_list **paths, t_list *path, int len);
-
-/* run_ants.c */
-void	print_paths(t_farm *farm, t_list *paths, int found_paths);
-void	calculate_routes(t_farm *farm, t_list *paths, int found_paths);
+int	max_paths_nb(t_farm *farm);
+int	count_links(t_farm *farm, int node);
+int	connected(t_farm *farm, int from, int to);
+int	find_end(t_farm *farm);
+int	find_start(t_farm *farm);
+t_solution	*init_solution(t_farm *farm);
+t_best	*init_best(t_farm *farm);
 
 /* find_solution.c */
 int	solve(t_farm *farm);

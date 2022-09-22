@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 14:58:04 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/18 20:34:24 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/22 09:21:06 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 int bubble_sort(int *tab, int size)
 {
-    int ii, jj, temp;
+    int i, j, temp;
 
-    ii = 0;
-    while (ii < size - 1)
+    i = 0;
+    while (i < size - 1)
     {
-        jj = size - 1;
-        while (jj > ii)
+        j = size - 1;
+        while (j > i)
         {
-            if (tab[jj-1] > tab[jj])
+            if (tab[j-1] > tab[j])
             {
-                ft_swap(&tab[jj-1], &tab[jj]);
+                ft_swap(&tab[j-1], &tab[j]);
             }
-            jj--;
+            j--;
         }
-        ii++;
+        i++;
     }
     return *tab;
 }
