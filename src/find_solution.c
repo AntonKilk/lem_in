@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/22 14:56:51 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/23 09:47:00 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,38 +61,54 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 	int	i;
 	int	p1;
 	int	p2;
+	int	moved;
+
 	//This is because lengts are sorted and
 	// can have -1 in the beginning
 	i = 0;
-	while (t_solution->lengths[0] == -1)
+	while (t_solution->lengths[i] == -1)
 		i++;
 	result = t_solution->lengths[i];
 	d = 1;
 	ants = farm->ants;
-	// while (i < )
+	while (i + 1 < farm->max_paths)
+	{
+		p1 = t_solution->lengths[i];
+		p2 = t_solution->lengths[i + 1];
+		moved = (p2 - p1) * d;
+		if (ants <= moved)
+			break ;
+		ants -= moved;
+		result += p2 - p1;
+		d += 1;
+		i++;
+	}
+	result += ants / d;
+	if (ants % d)
+		result += 1;
+	printf("result in evaluate: %d\n", result);
 	return (result);
 }
 
-int	evaluate_solution(t_farm *farm, t_solution *solution)
+int	evaluate_solution(t_farm *farm, t_solution *solution, t_best *best)
 {
 	int		result;
-	t_best	*best;
 
-	best = init_best(farm);
-
-	for (size_t i = 0; i < farm->start_links; i++)
-	{
-		printf("%d", best->starts[i]);
-	}
-	printf("\n");
 	result = evaluate(farm, solution);
-	// result = evaluate(solution->lengths);
-	for (size_t i = 0; i < farm->start_links; i++)
+	if (result < best->result)
+	{
+		best->result = result;
+		intcpy(best->solution, solution->data, farm->rooms_nb);
+		intcpy(best->starts, solution->starts, farm->max_paths);
+	}
+	//for printing
+	for (size_t i = 0; i < farm->max_paths; i++)
 	{
 		if (solution->starts[i] != -1)
 			printf("Reached end. Starts:%s\n", farm->rooms[solution->starts[i]]);
 		i++;
 	}
+	printf("\nRESULT: %d\n", result);
 	return (result);
 }
 
@@ -101,24 +117,22 @@ void	sort_lengths(int length, t_farm *farm, t_solution *solution)
 	int l;
 
 	l = 0;
-	while (l < farm->start_links)
+	while (l < farm->max_paths)
 	{
 		if (solution->lengths[l++] == -1)
 			break ;
 	}
 	solution->lengths[l - 1] = length;
-	bubble_sort(solution->lengths, farm->start_links);
+	bubble_sort(solution->lengths, farm->max_paths);
 }
 
-int	solve_from(int current, t_farm *farm, t_solution *solution)
+int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 {
 	int	next;
 	int	start;
 	int	end;
 	int length;
-	int	result;
 
-	result = MAX_INT;
 	start = find_start(farm);
 	end = find_end(farm);
 	next = 0;
@@ -139,11 +153,10 @@ int	solve_from(int current, t_farm *farm, t_solution *solution)
 				if (!length)
 					exit(1);
 				sort_lengths(length, farm, solution);
-				result = evaluate_solution(farm, solution);
-				int other = MAX_INT;
-				other = solve_from(start, farm, solution);
-				if (other != 0 && other < result)
-					result = other;
+				evaluate_solution(farm, solution, best);
+				solve_from(start, farm, solution, best);
+				// if (other < result)
+				// 	result = other;
 			}
 			else
 			{
@@ -151,7 +164,7 @@ int	solve_from(int current, t_farm *farm, t_solution *solution)
 					solution->starts[solution->n_paths++] = next;
 				else
 					solution->data[current] = next;
-				solve_from(next, farm, solution);
+				solve_from(next, farm, solution, best);
 				if (current == start)
 					solution->starts[solution->n_paths--] = -1;
 			}
@@ -159,19 +172,33 @@ int	solve_from(int current, t_farm *farm, t_solution *solution)
 		next++;
 	}
 	solution->data[current] = -1;
-	return (0);
+	return (1);
 }
 
 int	solve(t_farm *farm)
 {
 	int			start;
 	t_solution	*solution;
+	t_best	*best;
 
+	best = init_best(farm);
 	start = find_start(farm);
 	solution = init_solution(farm);
 	if(!solution)
 		return (error(NULL, "Allocation error in solve()\n"));
-	int result = solve_from(start, farm, solution);
-	printf("RESULT: %d\n", result);
+
+	if (!solve_from(start, farm, solution, best))
+		return (error(NULL, "No solution found"));
+	printf("Best RESULT in solve(): %d\n", best->result);
+	printf("best->solution arr\n");
+	for (size_t i = 0; i < farm->rooms_nb; i++)
+	{
+		printf("%3d", best->solution[i]);
+	}
+	printf("\nbest->starts arr\n");
+	for (size_t i = 0; i < farm->max_paths; i++)
+	{
+		printf("%3d", best->starts[i]);
+	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/22 14:29:02 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/23 09:28:34 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_farm
 	int		ants;
 	int		rooms_nb;
 	int		start_links;
+	int		max_paths;
 	char	*start;
 	char	*end;
 	char	**rooms;
@@ -81,6 +82,7 @@ void	parse_links(char **line, t_farm *farm, enum state *state);
 void	print_mtx(t_farm *farm);
 
 /* find_solution_helpers.c */
+void	intcpy(int *dest, int *src, int size);
 void	zero_arr(int *result, int size);
 int	*new_int_arr(int size);
 int	max_paths_nb(t_farm *farm);
@@ -93,7 +95,7 @@ t_best	*init_best(t_farm *farm);
 
 /* find_solution.c */
 int	solve(t_farm *farm);
-int	solve_from(int current, t_farm *farm, t_solution *solution);
+int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best);
 
 /* bubble_sort.c */
 int bubble_sort(int *tab, int size);
