@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 09:47:00 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/23 11:51:00 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	find_lengths(t_farm *farm, t_solution *solution)
 {
 	int	length;
 	int	i;
-	int	k;
 
 	int end = find_end(farm);
 	i = solution->starts[solution->n_paths - 1];
@@ -198,7 +197,10 @@ int	solve(t_farm *farm)
 	printf("\nbest->starts arr\n");
 	for (size_t i = 0; i < farm->max_paths; i++)
 	{
-		printf("%3d", best->starts[i]);
+		printf("%3s", farm->rooms[best->starts[i]]);
 	}
+	printf("\nPath(s) used:\n");
+	print_path(farm, solution, best);
+
 	return (1);
 }

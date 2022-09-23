@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 09:28:34 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/23 11:27:23 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	parse_links(char **line, t_farm *farm, enum state *state);
 
 /* print_mtx.c */
 void	print_mtx(t_farm *farm);
+void	print_path(t_farm *farm, t_solution *solution, t_best *best);
 
 /* find_solution_helpers.c */
 void	intcpy(int *dest, int *src, int size);

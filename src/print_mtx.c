@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 11:51:29 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/19 07:06:50 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/23 11:51:26 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,29 @@ void	print_mtx(t_farm *farm)
 		i++;
 	}
 	printf("\n");
+}
+
+
+void	print_path(t_farm *farm, t_solution *solution, t_best	*best)
+{
+	int	i;
+	int k;
+
+	int end = find_end(farm);
+	k = 0;
+	while(k < farm->max_paths)
+	{
+		printf("%s-", farm->start);
+		i = best->starts[k];
+		while(best->solution[i] != end)
+		{
+			if (best->solution[i] == -1) // for debug
+				exit(1);
+			printf("%s-", farm->rooms[i]);
+			i = best->solution[i];
+		}
+		printf("%s-%s\n", farm->rooms[i], farm->rooms[best->solution[i]]);
+		k++;
+	}
+
 }
