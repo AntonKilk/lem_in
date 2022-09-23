@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:34:20 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 11:17:05 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/23 13:27:19 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ t_solution	*init_solution(t_farm *farm)
 	solution->n_paths = 0;
 	solution->starts = new_int_arr(farm->max_paths);
 	solution->lengths = new_int_arr(farm->max_paths);
+	solution->result = 0;
 	return (solution);
 }
 
@@ -143,6 +144,7 @@ t_best	*init_best(t_farm *farm)
 	ft_bzero(best, sizeof(t_best));
 	best->solution = new_int_arr(farm->rooms_nb);
 	best->starts = new_int_arr(farm->max_paths);
-	best->result = MAX_INT;
+	best->result = 0;
 	return (best);
 }
+ 

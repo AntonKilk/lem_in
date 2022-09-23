@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 11:27:23 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/23 12:41:38 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_farm
 typedef struct s_solution
 {
 	int	n_paths;
+	int	result;
 	int	*data;
 	int	*lengths;
 	int	*starts;

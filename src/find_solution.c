@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 11:51:00 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/23 13:27:25 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,10 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 	return (result);
 }
 
-int	evaluate_solution(t_farm *farm, t_solution *solution, t_best *best)
+void	evaluate_solution(t_farm *farm, t_solution *solution, t_best *best)
 {
-	int		result;
 
-	result = evaluate(farm, solution);
-	if (result < best->result)
-	{
-		best->result = result;
-		intcpy(best->solution, solution->data, farm->rooms_nb);
-		intcpy(best->starts, solution->starts, farm->max_paths);
-	}
+	solution->result = evaluate(farm, solution);
 	//for printing
 	for (size_t i = 0; i < farm->max_paths; i++)
 	{
@@ -107,8 +100,7 @@ int	evaluate_solution(t_farm *farm, t_solution *solution, t_best *best)
 			printf("Reached end. Starts:%s\n", farm->rooms[solution->starts[i]]);
 		i++;
 	}
-	printf("\nRESULT: %d\n", result);
-	return (result);
+	printf("\nRESULT: %d\n", solution->result);
 }
 
 void	sort_lengths(int length, t_farm *farm, t_solution *solution)
@@ -130,7 +122,8 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 	int	next;
 	int	start;
 	int	end;
-	int length;
+	int	length;
+	int	other;
 
 	start = find_start(farm);
 	end = find_end(farm);
@@ -153,9 +146,10 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 					exit(1);
 				sort_lengths(length, farm, solution);
 				evaluate_solution(farm, solution, best);
+				/* check with current start if there are more paths available */
 				solve_from(start, farm, solution, best);
-				// if (other < result)
-				// 	result = other;
+				// if (other < solution->result)
+				// 	solution->result = other;
 			}
 			else
 			{
@@ -169,6 +163,20 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 			}
 		}
 		next++;
+		if (solution->result != 0 && best->result == 0)
+		{
+			printf("sol res:%d, best res:%d\n", solution->result, best->result);
+			best->result = solution->result;
+			intcpy(best->solution, solution->data, farm->rooms_nb);
+			intcpy(best->starts, solution->starts, farm->max_paths);
+		}
+		else if (solution->result < best->result)
+		{
+			printf("IN sol res:%d, best res:%d\n", solution->result, best->result);
+			best->result = solution->result;
+			intcpy(best->solution, solution->data, farm->rooms_nb);
+			intcpy(best->starts, solution->starts, farm->max_paths);
+		}
 	}
 	solution->data[current] = -1;
 	return (1);
