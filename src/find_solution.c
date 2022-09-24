@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 13:27:25 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/24 07:32:16 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	find_lengths(t_farm *farm, t_solution *solution)
 	i = solution->starts[solution->n_paths - 1];
 	length = 1;
 	//for printing:
-	printf("\ncurr start:%s\n", farm->rooms[i]);
+	// printf("\ncurr start:%s\n", farm->rooms[i]);
+	printf("Current path:");
 	printf("\n%s-", farm->start);
 	while(solution->data[i] != end)
 	{
@@ -61,19 +62,47 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 	int	p1;
 	int	p2;
 	int	moved;
+	int	*sortedlens;
 
-	//This is because lengts are sorted and
-	// can have -1 in the beginning
+
+	//Get rid of all negative values in lengths// create a separate func
+	/* new f */
 	i = 0;
-	while (t_solution->lengths[i] == -1)
+	int k = 0;
+	int	new_len = 0;
+	while (i < farm->max_paths)
+	{
+		if (t_solution->lengths[i] > 0)
+			new_len++;
 		i++;
-	result = t_solution->lengths[i];
+	}
+	sortedlens = new_int_arr(new_len);
+	i = 0;
+	while (i < farm->max_paths)
+	{
+		sortedlens[k] = t_solution->lengths[i];
+		k++;
+		i++;
+	}
+	bubble_sort(sortedlens, new_len);
+	/* new f */
+
+	printf("\nNEW lens:\n");
+	for (size_t i = 0; i < new_len; i++)
+	{
+		printf(" %d ", sortedlens[i]);
+	}
+	printf("\n");
+
+	// calculate
+	result = sortedlens[0];
 	d = 1;
 	ants = farm->ants;
-	while (i + 1 < farm->max_paths)
+	i = 0;
+	while (i + 1 < new_len)
 	{
-		p1 = t_solution->lengths[i];
-		p2 = t_solution->lengths[i + 1];
+		p1 = sortedlens[i];
+		p2 = sortedlens[i + 1];
 		moved = (p2 - p1) * d;
 		if (ants <= moved)
 			break ;
@@ -86,6 +115,7 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 	if (ants % d)
 		result += 1;
 	printf("result in evaluate: %d\n", result);
+	free(sortedlens);
 	return (result);
 }
 
@@ -100,21 +130,21 @@ void	evaluate_solution(t_farm *farm, t_solution *solution, t_best *best)
 			printf("Reached end. Starts:%s\n", farm->rooms[solution->starts[i]]);
 		i++;
 	}
-	printf("\nRESULT: %d\n", solution->result);
+	printf("RESULT: %d\n", solution->result);
 }
 
-void	sort_lengths(int length, t_farm *farm, t_solution *solution)
+void	fill_lengths(int length, t_farm *farm, t_solution *solution)
 {
-	int l;
-
-	l = 0;
-	while (l < farm->max_paths)
+	int	i;
+	solution->lengths[solution->n_paths - 1] = length;
+	// zero lengths if no starts
+	i = 0;
+	while (i < farm->max_paths)
 	{
-		if (solution->lengths[l++] == -1)
-			break ;
+		if (solution->starts[i] == -1)
+			solution->lengths[i] = -1;
+		i++;
 	}
-	solution->lengths[l - 1] = length;
-	bubble_sort(solution->lengths, farm->max_paths);
 }
 
 int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
@@ -144,7 +174,7 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 				length = find_lengths(farm, solution);
 				if (!length)
 					exit(1);
-				sort_lengths(length, farm, solution);
+				fill_lengths(length, farm, solution);
 				evaluate_solution(farm, solution, best);
 				/* check with current start if there are more paths available */
 				solve_from(start, farm, solution, best);
@@ -165,14 +195,12 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 		next++;
 		if (solution->result != 0 && best->result == 0)
 		{
-			printf("sol res:%d, best res:%d\n", solution->result, best->result);
 			best->result = solution->result;
 			intcpy(best->solution, solution->data, farm->rooms_nb);
 			intcpy(best->starts, solution->starts, farm->max_paths);
 		}
 		else if (solution->result < best->result)
 		{
-			printf("IN sol res:%d, best res:%d\n", solution->result, best->result);
 			best->result = solution->result;
 			intcpy(best->solution, solution->data, farm->rooms_nb);
 			intcpy(best->starts, solution->starts, farm->max_paths);
