@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 11:21:50 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 16:44:46 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(void)
 	t_farm	farm;
 
 	parse(&farm);
-	print_mtx(&farm);
+	// print_mtx(&farm);
 	printf("FIND SOLUTION\n");
 
 	solve(&farm);

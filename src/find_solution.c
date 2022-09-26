@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/26 10:01:06 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 12:36:22 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 
 int	get_next_start(t_solution *solution)
 {
-	int	next;
-
-	next = solution->starts[solution->n_paths - 1];
-	solution->starts[solution->n_paths - 1] = -1;
-	solution->n_paths--;
-	return (next);
+	return (solution->starts[solution->n_paths - 1]);
 }
 
 int	find_length(t_farm *farm, t_solution *solution)
@@ -164,7 +159,15 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 	int	length;
 	int	other;
 
-	next = 0;
+	if (current == farm->start && solution->n_paths != 0)
+	{
+		// if (solution->n_paths == farm->max_paths)
+		// 	return (1);
+		// else
+		next = get_next_start(solution) + 1;
+	}
+	else
+		next = 0;
 	while (next < farm->rooms_nb)
 	{
 		if(connected(farm, current, next))
@@ -196,7 +199,7 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 					solution->data[current] = next;
 				solve_from(next, farm, solution, best);
 				if (current == farm->start)
-					next = get_next_start(solution);
+					solution->starts[solution->n_paths--] = -1;
 			}
 		}
 		next++;
