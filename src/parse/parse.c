@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 08:47:59 by akilk             #+#    #+#             */
-/*   Updated: 2022/08/29 16:21:53 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 07:09:03 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void	parse(t_farm *farm)
 	while (get_next_line(0, &line))
 	{
 		if (line_state == START)
-			farm->start = get_room_name(line);
+			farm->start_name = get_room_name(line);
 		else if (line_state == END)
-			farm->end = get_room_name(line);
+			farm->end_name = get_room_name(line);
 		read_state(&line_state, line);
 		if (line_state == ANTS)
 			parse_ants(line, farm);

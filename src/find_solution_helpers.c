@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:34:20 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 13:27:19 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 07:12:26 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	find_start(t_farm *farm)
 	i = 0;
 	while (i < farm->rooms_nb)
 	{
-		if(!ft_strcmp(farm->start, farm->rooms[i]))
+		if(!ft_strcmp(farm->start_name, farm->rooms[i]))
 			break;
 		i++;
 	}
@@ -78,7 +78,7 @@ int	find_end(t_farm *farm)
 	i= 0;
 	while (i < farm->rooms_nb)
 	{
-		if(!ft_strcmp(farm->end, farm->rooms[i]))
+		if(!ft_strcmp(farm->end_name, farm->rooms[i]))
 			break;
 		i++;
 	}
@@ -147,4 +147,3 @@ t_best	*init_best(t_farm *farm)
 	best->result = 0;
 	return (best);
 }
- 

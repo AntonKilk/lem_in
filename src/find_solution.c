@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/26 06:32:34 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 07:17:26 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,13 @@ int	find_length(t_farm *farm, t_solution *solution)
 	int	length;
 	int	i;
 
-	int end = find_end(farm);
 	i = solution->starts[solution->n_paths - 1];
 	length = 1;
 	//for printing:
 	// printf("\ncurr start:%s\n", farm->rooms[i]);
 	printf("Current path:");
-	printf("\n%s-", farm->start);
-	while(solution->data[i] != end)
+	printf("\n%s-", farm->rooms[farm->start]);
+	while(solution->data[i] != farm->end)
 	{
 		if (solution->data[i] == -1)
 			return (error(NULL, "Wrong data in find_lenght()"));
@@ -151,45 +150,41 @@ void	fill_lengths(int length, t_farm *farm, t_solution *solution)
 int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 {
 	int	next;
-	int	start;
-	int	end;
 	int	length;
 	int	other;
 
-	start = find_start(farm);
-	end = find_end(farm);
 	next = 0;
 	while (next < farm->rooms_nb)
 	{
 		if(connected(farm, current, next))
 		{
-			if (solution->data[next] != -1 || next == start)
+			if (solution->data[next] != -1 || next == farm->start)
 			{
 				next++;
 				continue ;
 			}
 			printf("Trying link %s -> %s\n", farm->rooms[current], farm->rooms[next]);
-			if (next == end)
+			if (next == farm->end)
 			{
-				solution->data[current] = end;
+				solution->data[current] = farm->end;
 				length = find_length(farm, solution);
 				if (!length)
 					exit(1);
 				fill_lengths(length, farm, solution);
 				evaluate_solution(farm, solution, best);
 				/* check with current start if there are more paths available */
-				solve_from(start, farm, solution, best);
+				solve_from(farm->start, farm, solution, best);
 				// if (other < solution->result)
 				// 	solution->result = other;
 			}
 			else
 			{
-				if (current == start)
+				if (current == farm->start)
 					solution->starts[solution->n_paths++] = next;
 				else
 					solution->data[current] = next;
 				solve_from(next, farm, solution, best);
-				if (current == start)
+				if (current == farm->start)
 					solution->starts[solution->n_paths--] = -1;
 			}
 		}
@@ -218,12 +213,13 @@ int	solve(t_farm *farm)
 	t_best	*best;
 
 	best = init_best(farm);
-	start = find_start(farm);
+	farm->start = find_start(farm);
+	farm->end = find_end(farm);
 	solution = init_solution(farm);
 	if(!solution)
 		return (error(NULL, "Allocation error in solve()\n"));
 
-	if (!solve_from(start, farm, solution, best))
+	if (!solve_from(farm->start, farm, solution, best))
 		return (error(NULL, "No solution found"));
 	printf("Best RESULT in solve(): %d\n", best->result);
 	printf("best->solution arr\n");

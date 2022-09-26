@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 12:41:38 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 07:18:52 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ typedef struct s_farm
 	int		rooms_nb;
 	int		start_links;
 	int		max_paths;
-	char	*start;
-	char	*end;
+	int		start;
+	char	*start_name;
+	int		end;
+	char	*end_name;
 	char	**rooms;
 	int		*links;
 }				t_farm;
