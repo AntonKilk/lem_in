@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/24 07:32:16 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 06:32:34 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	get_next_start(t_solution *solution)
 	return (next);
 }
 
-int	find_lengths(t_farm *farm, t_solution *solution)
+int	find_length(t_farm *farm, t_solution *solution)
 {
 	int	length;
 	int	i;
@@ -42,7 +42,7 @@ int	find_lengths(t_farm *farm, t_solution *solution)
 	while(solution->data[i] != end)
 	{
 		if (solution->data[i] == -1)
-			return (error(NULL, "Wrong data in find_lenghts()"));
+			return (error(NULL, "Wrong data in find_lenght()"));
 		length++;
 		// for printing:
 		printf("%s-", farm->rooms[i]);
@@ -68,7 +68,6 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 	//Get rid of all negative values in lengths// create a separate func
 	/* new f */
 	i = 0;
-	int k = 0;
 	int	new_len = 0;
 	while (i < farm->max_paths)
 	{
@@ -78,12 +77,14 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 	}
 	sortedlens = new_int_arr(new_len);
 	i = 0;
+	int k = 0;
 	while (i < farm->max_paths)
 	{
-		sortedlens[k] = t_solution->lengths[i];
-		k++;
+		if (t_solution->lengths[i] > 0)
+			sortedlens[k++] = t_solution->lengths[i];
 		i++;
 	}
+	// intcpy(sortedlens, t_solution->lengths + i, new_len);
 	bubble_sort(sortedlens, new_len);
 	/* new f */
 
@@ -171,7 +172,7 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 			if (next == end)
 			{
 				solution->data[current] = end;
-				length = find_lengths(farm, solution);
+				length = find_length(farm, solution);
 				if (!length)
 					exit(1);
 				fill_lengths(length, farm, solution);

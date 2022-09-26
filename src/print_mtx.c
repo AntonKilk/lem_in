@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 11:51:29 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/23 12:58:46 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 06:58:30 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	print_path(t_farm *farm, t_solution *solution, t_best	*best)
 	int k;
 
 	int end = find_end(farm);
+	printf("end: %d\n", end);
 	k = 0;
 	while(k < farm->max_paths)
 	{
@@ -59,7 +60,10 @@ void	print_path(t_farm *farm, t_solution *solution, t_best	*best)
 		while(best->solution[i] != end)
 		{
 			if (best->solution[i] == -1) // for debug
+			{
+				printf("i:%d, data:%d\n", i, best->solution[i]);
 				exit(1);
+			}
 			printf("%s-", farm->rooms[i]);
 			i = best->solution[i];
 		}
