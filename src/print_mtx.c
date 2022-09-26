@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 11:51:29 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/26 07:19:29 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 09:54:54 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	print_path(t_farm *farm, t_solution *solution, t_best	*best)
 	int	i;
 	int k;
 
-	printf("end: %d\n", farm->end);
 	k = 0;
 	while(k < farm->max_paths)
 	{

@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/26 07:17:26 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 10:01:06 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,11 @@
 
 int	get_next_start(t_solution *solution)
 {
-	int	k;
 	int	next;
 
-	next = 0;
-	k = 0;
-	while (solution->starts[k] != -1)
-	{
-		next = solution->starts[k];
-		k++;
-	}
+	next = solution->starts[solution->n_paths - 1];
+	solution->starts[solution->n_paths - 1] = -1;
+	solution->n_paths--;
 	return (next);
 }
 
@@ -147,6 +142,22 @@ void	fill_lengths(int length, t_farm *farm, t_solution *solution)
 	}
 }
 
+void	fill_best(t_farm *farm, t_solution *solution, t_best *best)
+{
+	if (solution->result != 0 && best->result == 0)
+	{
+		best->result = solution->result;
+		intcpy(best->solution, solution->data, farm->rooms_nb);
+		intcpy(best->starts, solution->starts, farm->max_paths);
+	}
+	else if (solution->result < best->result)
+	{
+		best->result = solution->result;
+		intcpy(best->solution, solution->data, farm->rooms_nb);
+		intcpy(best->starts, solution->starts, farm->max_paths);
+	}
+}
+
 int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 {
 	int	next;
@@ -185,22 +196,11 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 					solution->data[current] = next;
 				solve_from(next, farm, solution, best);
 				if (current == farm->start)
-					solution->starts[solution->n_paths--] = -1;
+					next = get_next_start(solution);
 			}
 		}
 		next++;
-		if (solution->result != 0 && best->result == 0)
-		{
-			best->result = solution->result;
-			intcpy(best->solution, solution->data, farm->rooms_nb);
-			intcpy(best->starts, solution->starts, farm->max_paths);
-		}
-		else if (solution->result < best->result)
-		{
-			best->result = solution->result;
-			intcpy(best->solution, solution->data, farm->rooms_nb);
-			intcpy(best->starts, solution->starts, farm->max_paths);
-		}
+		fill_best(farm, solution, best);
 	}
 	solution->data[current] = -1;
 	return (1);
