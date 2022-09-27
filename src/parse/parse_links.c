@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:29:44 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/19 07:03:43 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/27 12:51:55 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,5 @@ void	parse_links(char **line, t_farm *farm, enum state *state)
 		if (!get_next_line(0, line))
 			break ;
 	}
+	ft_strdel(line);
 }

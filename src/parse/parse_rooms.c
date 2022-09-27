@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:04:17 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/19 06:41:58 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/27 12:41:12 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	parse_rooms(t_lst *room_lst, t_farm *farm)
 	while (room_lst)
 	{
 		size--;
-		// printf("value: %s\n", (char *)room_lst->content);
 		farm->rooms[size] = ft_strdup((char *)room_lst->content);
 		free(room_lst->content);
 		room_lst = room_lst->next;

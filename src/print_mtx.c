@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 11:51:29 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/26 09:54:54 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/26 19:56:12 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	print_mtx(t_farm *farm)
 	}
 	printf("\n");
 }
-
 
 void	print_path(t_farm *farm, t_solution *solution, t_best	*best)
 {

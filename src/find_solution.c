@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/26 12:36:22 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/27 11:26:36 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ int	find_length(t_farm *farm, t_solution *solution)
 	length = 1;
 	//for printing:
 	// printf("\ncurr start:%s\n", farm->rooms[i]);
-	printf("Current path:");
-	printf("\n%s-", farm->rooms[farm->start]);
+	// printf("Current path:");
+	// printf("\n%s-", farm->rooms[farm->start]);
 	while(solution->data[i] != farm->end)
 	{
 		if (solution->data[i] == -1)
 			return (error(NULL, "Wrong data in find_lenght()"));
 		length++;
 		// for printing:
-		printf("%s-", farm->rooms[i]);
+		// printf("%s-", farm->rooms[i]);
 		i = solution->data[i];
 	}
-	printf("%s-%s", farm->rooms[i], farm->rooms[solution->data[i]]);
-	printf("\nLength:%d\n", length);
+	// printf("%s-%s", farm->rooms[i], farm->rooms[solution->data[i]]);
+	// printf("\nLength:%d\n", length);
 	return (length);
 }
 
@@ -77,13 +77,6 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 	bubble_sort(sortedlens, new_len);
 	/* new f */
 
-	printf("\nNEW lens:\n");
-	for (size_t i = 0; i < new_len; i++)
-	{
-		printf(" %d ", sortedlens[i]);
-	}
-	printf("\n");
-
 	// calculate
 	result = sortedlens[0];
 	d = 1;
@@ -104,7 +97,7 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 	result += ants / d;
 	if (ants % d)
 		result += 1;
-	printf("result in evaluate: %d\n", result);
+	// printf("result in evaluate: %d\n", result);
 	free(sortedlens);
 	return (result);
 }
@@ -117,10 +110,10 @@ void	evaluate_solution(t_farm *farm, t_solution *solution, t_best *best)
 	for (size_t i = 0; i < farm->max_paths; i++)
 	{
 		if (solution->starts[i] != -1)
-			printf("Reached end. Starts:%s\n", farm->rooms[solution->starts[i]]);
+			// printf("Reached end. Starts:%s\n", farm->rooms[solution->starts[i]]);
 		i++;
 	}
-	printf("RESULT: %d\n", solution->result);
+	// printf("RESULT: %d\n", solution->result);
 }
 
 void	fill_lengths(int length, t_farm *farm, t_solution *solution)
@@ -160,12 +153,7 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 	int	other;
 
 	if (current == farm->start && solution->n_paths != 0)
-	{
-		// if (solution->n_paths == farm->max_paths)
-		// 	return (1);
-		// else
 		next = get_next_start(solution) + 1;
-	}
 	else
 		next = 0;
 	while (next < farm->rooms_nb)
@@ -177,7 +165,7 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 				next++;
 				continue ;
 			}
-			printf("Trying link %s -> %s\n", farm->rooms[current], farm->rooms[next]);
+			// printf("Trying link %s -> %s\n", farm->rooms[current], farm->rooms[next]);
 			if (next == farm->end)
 			{
 				solution->data[current] = farm->end;
@@ -188,8 +176,6 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 				evaluate_solution(farm, solution, best);
 				/* check with current start if there are more paths available */
 				solve_from(farm->start, farm, solution, best);
-				// if (other < solution->result)
-				// 	solution->result = other;
 			}
 			else
 			{
@@ -216,8 +202,6 @@ int	solve(t_farm *farm)
 	t_best	*best;
 
 	best = init_best(farm);
-	farm->start = find_start(farm);
-	farm->end = find_end(farm);
 	solution = init_solution(farm);
 	if(!solution)
 		return (error(NULL, "Allocation error in solve()\n"));
@@ -237,6 +221,6 @@ int	solve(t_farm *farm)
 	}
 	printf("\nPath(s) used:\n");
 	print_path(farm, solution, best);
-
+	free_solution(solution, best);
 	return (1);
 }

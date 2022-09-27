@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 08:47:59 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/26 07:09:03 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/27 12:51:59 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	parse(t_farm *farm)
 	}
 	parse_rooms(room_lst, farm);
 	parse_links(&line, farm, &line_state);
+	farm->start = find_start(farm);
+	farm->end = find_end(farm);
 	if (!parsing_is_valid(farm))
 		fprintf(stderr, "Wrong input."); // rplc
 }

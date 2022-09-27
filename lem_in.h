@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/26 07:18:52 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/27 11:31:45 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,12 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best);
 
 /* bubble_sort.c */
 int bubble_sort(int *tab, int size);
+
+/* optimize.c */
+int	preprocess_farm(t_farm *farm);
+
+/* free.c */
+void	release(t_farm *farm);
+void	free_solution(t_solution *solution, t_best *best);
 
 #endif
