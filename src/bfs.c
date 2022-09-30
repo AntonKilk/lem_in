@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:24:25 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/30 17:55:17 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/30 17:56:34 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@ int	end_reached(t_farm *farm, int *distances)
 	if (distances[farm->end] == -1)
 		return (0);
 	return (1);
-}
-
-int	is_connected(t_farm *farm, int fst, int snd)
-{
-	if (farm->links[fst + snd] == 1)
-		return (1);
-	return (0);
 }
 
 //this function is used  each step during BFS to set distances for connected rooms + 1 from current room
