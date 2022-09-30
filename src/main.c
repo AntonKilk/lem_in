@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/30 11:06:17 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/30 17:33:24 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int	error(char **str, char *msg)
 int	main(void)
 {
 	t_farm	farm;
-
-
+	int	*distances;
 	parse(&farm);
-	print_mtx(&farm);
+	// print_mtx(&farm);
 
 	// preprocess_farm(&farm);
-	// print_mtx(&farm);
+	print_mtx(&farm);
+	distances = new_int_arr(farm.rooms_nb);
+	bfs(&farm, distances);
 	printf("FIND SOLUTION\n");
-
-	solve(&farm);
+	// solve(&farm);
 	release(&farm);
 	return (0);
 }

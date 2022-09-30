@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/28 15:55:10 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/30 17:36:36 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 		i++;
 	}
 	// intcpy(sortedlens, t_solution->lengths + i, new_len);
-	bubble_sort(sortedlens, new_len);
+	// bubble_sort(sortedlens, new_len);
 	/* new f */
 
 	// calculate

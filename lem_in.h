@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/27 17:58:20 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/30 17:35:58 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ typedef struct s_best
 	int	*starts;
 }			t_best;
 
+typedef struct s_queue
+{
+	int	head;
+	int	tail;
+	int	data[0];
+}			t_queue;
 
 enum	state
 {
@@ -100,9 +106,6 @@ int	find_start(t_farm *farm);
 int	solve(t_farm *farm);
 int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best);
 
-/* bubble_sort.c */
-int bubble_sort(int *tab, int size);
-
 /* optimize.c */
 int	preprocess_farm(t_farm *farm);
 
@@ -113,5 +116,15 @@ void	free_solution(t_solution *solution, t_best *best);
 /* init.c */
 t_solution	*init_solution(t_farm *farm);
 t_best	*init_best(t_farm *farm);
+
+/* bfs.c */
+int	bfs(t_farm *farm, int *distances);
+
+/* queue helpers.c */
+t_queue *new_queue(int size);
+void	put(t_queue *q, int item);
+int	get(t_queue *q);
+int	is_empty(t_queue *q);
+void	release_queue(t_queue *q);
 
 #endif
