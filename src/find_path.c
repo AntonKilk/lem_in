@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 13:02:38 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 16:44:21 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/30 12:19:59 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_list	*find_path(t_farm *farm, int *distances, t_list **paths, int *visited)
 
 	len = 0;
 	path = NULL;
-	current = find_end(farm);
+	current = farm->end;
 	curr_room = ft_lstnew(&current, sizeof(current));
 	ft_lstadd(&path, curr_room);
 	len++;
@@ -109,6 +109,8 @@ int	find_all_paths(t_farm *farm, t_list **paths)
 	int	found_paths;
 	int	*visited;
 
+	farm->start = find_start(farm);
+	farm->end = find_end(farm);
 	visited = new_int_arr(farm->rooms_nb);
 	distances = new_int_arr(farm->rooms_nb);
 	found_paths = 0;

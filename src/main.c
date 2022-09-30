@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 19:59:26 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 17:45:23 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/30 12:18:51 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ int	main(void)
 	calculate_routes(&farm, paths, found_paths);
 	// run_ants(&farm, paths);
 	// free(farm);
-	// free(paths);
+	release(&farm);
 	return (0);
 }

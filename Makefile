@@ -7,6 +7,7 @@ SRC_FILES = main.c\
 	print_mtx.c\
 	queue_helpers.c\
 	run_ants.c\
+	free.c\
 	parse/parse_links.c\
 	parse/parse_rooms.c\
 	parse/parse.c\
@@ -21,6 +22,7 @@ OBJ_FILES  = main.o\
 	print_mtx.o\
 	queue_helpers.o\
 	run_ants.o\
+	free.o\
 	parse/parse_links.o\
 	parse/parse_rooms.o\
 	parse/parse.o\

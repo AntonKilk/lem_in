@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/12 17:43:34 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/30 12:20:12 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ typedef struct s_farm
 {
 	size_t	ants;
 	size_t	rooms_nb;
-	char	*start;
-	char	*end;
+	char	*start_name;
+	int		start;
+	char	*end_name;
+	int		end;
 	char	**rooms;
 	int		*links;
 }				t_farm;
@@ -109,5 +111,8 @@ void	add2list(t_list **paths, t_list *path, int len);
 /* run_ants.c */
 void	print_paths(t_farm *farm, t_list *paths, int found_paths);
 void	calculate_routes(t_farm *farm, t_list *paths, int found_paths);
+
+/* free.c */
+void	release(t_farm *farm);
 
 #endif
