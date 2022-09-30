@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/27 11:26:36 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/28 15:55:10 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,17 @@ int	find_length(t_farm *farm, t_solution *solution)
 	int	i;
 
 	i = solution->starts[solution->n_paths - 1];
-	length = 1;
-	//for printing:
-	// printf("\ncurr start:%s\n", farm->rooms[i]);
-	// printf("Current path:");
-	// printf("\n%s-", farm->rooms[farm->start]);
+	length = connected(farm, farm->start, i);
+	// printf("start: %s\n", farm->rooms[i]);
+	if (solution->data[i] == farm->end)
+		length += connected(farm, i, solution->data[i]);
 	while(solution->data[i] != farm->end)
 	{
 		if (solution->data[i] == -1)
 			return (error(NULL, "Wrong data in find_lenght()"));
-		length++;
-		// for printing:
-		// printf("%s-", farm->rooms[i]);
+		length += connected(farm, i, solution->data[i]);
 		i = solution->data[i];
 	}
-	// printf("%s-%s", farm->rooms[i], farm->rooms[solution->data[i]]);
 	// printf("\nLength:%d\n", length);
 	return (length);
 }
@@ -102,20 +98,6 @@ int	evaluate(t_farm *farm, t_solution *t_solution)
 	return (result);
 }
 
-void	evaluate_solution(t_farm *farm, t_solution *solution, t_best *best)
-{
-
-	solution->result = evaluate(farm, solution);
-	//for printing
-	for (size_t i = 0; i < farm->max_paths; i++)
-	{
-		if (solution->starts[i] != -1)
-			// printf("Reached end. Starts:%s\n", farm->rooms[solution->starts[i]]);
-		i++;
-	}
-	// printf("RESULT: %d\n", solution->result);
-}
-
 void	fill_lengths(int length, t_farm *farm, t_solution *solution)
 {
 	int	i;
@@ -173,7 +155,7 @@ int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best)
 				if (!length)
 					exit(1);
 				fill_lengths(length, farm, solution);
-				evaluate_solution(farm, solution, best);
+				solution->result = evaluate(farm, solution);
 				/* check with current start if there are more paths available */
 				solve_from(farm->start, farm, solution, best);
 			}
@@ -199,7 +181,7 @@ int	solve(t_farm *farm)
 {
 	int			start;
 	t_solution	*solution;
-	t_best	*best;
+	t_best		*best;
 
 	best = init_best(farm);
 	solution = init_solution(farm);

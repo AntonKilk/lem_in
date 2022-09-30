@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:34:20 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/26 07:12:26 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/28 15:32:07 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ int	connected(t_farm *farm, int from, int to)
 	return (farm->links[from * farm->rooms_nb + to]);
 }
 
+void	set_length(t_farm *farm, int from, int to, int len)
+{
+	farm->links[from * farm->rooms_nb + to] = len;
+	farm->links[to * farm->rooms_nb + from] = len;
+}
+
 int	count_links(t_farm *farm, int node)
 {
 	int *row;
@@ -109,41 +115,5 @@ int	count_links(t_farm *farm, int node)
 
 int	max_paths_nb(t_farm *farm)
 {
-	int	start = find_start(farm);
-	int	end = find_end(farm);
-
-	return (ft_min(count_links(farm, start), count_links(farm, end)));
-}
-
-t_solution	*init_solution(t_farm *farm)
-{
-	t_solution	*solution;
-
-	solution = (t_solution *)malloc(sizeof(t_solution));
-	if(!solution)
-		return (0);
-	ft_bzero(solution, sizeof(t_solution));
-
-	farm->start_links = count_links(farm, find_start(farm));
-	farm->max_paths = max_paths_nb(farm);
-	solution->data = new_int_arr(farm->rooms_nb);
-	solution->n_paths = 0;
-	solution->starts = new_int_arr(farm->max_paths);
-	solution->lengths = new_int_arr(farm->max_paths);
-	solution->result = 0;
-	return (solution);
-}
-
-t_best	*init_best(t_farm *farm)
-{
-	t_best	*best;
-
-	best = (t_best *)malloc(sizeof(t_best));
-	if(!best)
-		return (0);
-	ft_bzero(best, sizeof(t_best));
-	best->solution = new_int_arr(farm->rooms_nb);
-	best->starts = new_int_arr(farm->max_paths);
-	best->result = 0;
-	return (best);
+	return (ft_min(count_links(farm, farm->start), count_links(farm, farm->end)));
 }

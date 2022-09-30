@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/27 11:31:45 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/27 17:58:20 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,9 @@ int	*new_int_arr(int size);
 int	max_paths_nb(t_farm *farm);
 int	count_links(t_farm *farm, int node);
 int	connected(t_farm *farm, int from, int to);
+void	set_length(t_farm *farm, int from, int to, int len);
 int	find_end(t_farm *farm);
 int	find_start(t_farm *farm);
-t_solution	*init_solution(t_farm *farm);
-t_best	*init_best(t_farm *farm);
 
 /* find_solution.c */
 int	solve(t_farm *farm);
@@ -110,5 +109,9 @@ int	preprocess_farm(t_farm *farm);
 /* free.c */
 void	release(t_farm *farm);
 void	free_solution(t_solution *solution, t_best *best);
+
+/* init.c */
+t_solution	*init_solution(t_farm *farm);
+t_best	*init_best(t_farm *farm);
 
 #endif

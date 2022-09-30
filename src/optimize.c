@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 19:57:18 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/27 12:29:13 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/28 15:33:07 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,43 @@ int	preprocess_farm(t_farm *farm)
 		linked[1] = -1;
 		found = 0;
 		next = 0;
+		int move_on = 0;
 		while (next < farm->rooms_nb)
 		{
 			if (connected(farm, current, next))
 			{
 				if (found >= 2)
+				{
+					move_on = 1;
 					break ;
-				// printf("проходим:%s-%s\n", farm->rooms[current],farm->rooms[next]);
+				}
 				linked[found++] = next;
-				// if (linked[0] == -1)
-				// {
-				// 	linked[0] = next;
-				// 	found++;
-				// }
-				// else if (linked[1] == -1)
-				// {
-				// 	linked[1] = next;
-				// 	found++;
-				// }
 			}
 			next++;
 		}
 		if (found == 1)
 		{
-			// printf("убрать:%s и %s\n", farm->rooms[current], farm->rooms[linked[0]]);
+			//printf("убрать:%s и %s\n", farm->rooms[current], farm->rooms[linked[0]]);
 			farm->links[current * farm->rooms_nb + linked[0]] = 0;
 			farm->links[linked[0] * farm->rooms_nb + current] = 0;
 			removed++;
 			if (linked[0] < current)
 				current = linked[0] - 1;
+		}
+		if (!move_on && found == 2 && !(linked[0] == farm->start
+			&& linked[1] == farm->end)
+			&& !(linked[1] == farm->end
+			&& linked[0] == farm->start))
+		{
+			// printf("1 убрать связи у %s\n", farm->rooms[current]);
+			int l1 = connected(farm, current, linked[0]);
+			int l2 = connected(farm, current, linked[1]);
+			int ol = connected(farm, linked[0], linked[1]);
+			// printf("l1 %d l2 %d ol %d\n", l1, l2, ol);
+			set_length(farm, current, linked[0], 0);
+			set_length(farm, current, linked[1], 0);
+			if ( ol == 0  || (ol > l1 + l2))
+				set_length(farm, linked[0], linked[1], l1 + l2);
 		}
 		current++;
 	}
