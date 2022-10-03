@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 13:20:15 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/27 13:23:12 by akilk            ###   ########.fr       */
+/*   Updated: 2022/09/30 19:11:04 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,18 @@ t_best	*init_best(t_farm *farm)
 	best->starts = new_int_arr(farm->max_paths);
 	best->result = 0;
 	return (best);
+}
+
+t_room	*init_room(t_farm *farm)
+{
+	t_room	*room;
+
+	room = (t_room *)malloc(sizeof(t_room));
+	if(!room)
+		return (0);
+	ft_bzero(room, sizeof(t_room));
+	room->next = -1;
+	room->prev = -1;
+	room->state = 0;
+	return (room);
 }

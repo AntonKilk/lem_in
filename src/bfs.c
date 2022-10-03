@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:24:25 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/30 17:56:34 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/03 11:31:55 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	set_distances(t_farm *farm, t_queue *q, int *distances, int current)
 		// printf("cur: %d i: %d dist:%d\n", current, i, distances[i]);
 		if (connected(farm, current, i) && distances[i] == -1)
 		{
-			printf("check link %s-%s\n", farm->rooms[current], farm->rooms[i]);
+			// printf("check link %s-%s\n", farm->rooms[current], farm->rooms[i]);
 			distances[i] = new_distance;
 			printf("room %s has distance: %d\n",farm->rooms[i], distances[i]);
 			// current = i;
@@ -44,21 +44,12 @@ void	set_distances(t_farm *farm, t_queue *q, int *distances, int current)
 	}
 }
 
-/*
-** Breadth First Search (BFS).
-** We assign distance of 0 to START room.
-** From START we move to linked rooms assigning them distance +1
-** unless we reach END.
-** We use two-directional linked list queue adding new linked rooms
-** to the end of queue and getting rooms from beginning of list.
-** If we cannot reach END or there is no rooms left in queue we quit.
-*/
-
-int	bfs(t_farm *farm, int *distances)
+int	bfs(t_farm *farm, int *distances, t_room *room)
 {
 	t_queue	*q;
 	int		current;
 
+	// printf("room state %d next %d, prev %d\n", room->state, room->next, room->prev);
 	current = farm->start;
 	q = new_queue(farm->rooms_nb);
 	distances[current] = 0;

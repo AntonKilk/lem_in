@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/30 17:35:58 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/03 11:06:45 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,18 @@ typedef struct s_farm
 	int		*links;
 }				t_farm;
 
+typedef struct s_room_info
+{
+	int	state;
+	int	prev;
+	int	next;
+}			t_room_info;
+
 typedef struct s_solution
 {
 	int	n_paths;
 	int	result;
-	int	*data;
+	t_room_info	*data; // struct room_info *room_states
 	int	*lengths;
 	int	*starts;
 }			t_solution;
@@ -72,6 +79,14 @@ enum	state
 	ROOMS,
 	LINKS,
 	ERROR
+};
+
+enum	room_state
+{
+	FREE,
+	VISITED,
+	USED,
+	PASS
 };
 
 void	parse(t_farm *farm);
@@ -103,7 +118,7 @@ int	find_end(t_farm *farm);
 int	find_start(t_farm *farm);
 
 /* find_solution.c */
-int	solve(t_farm *farm);
+int	solve(t_farm *farm, int *distances);
 int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best);
 
 /* optimize.c */
@@ -116,9 +131,10 @@ void	free_solution(t_solution *solution, t_best *best);
 /* init.c */
 t_solution	*init_solution(t_farm *farm);
 t_best	*init_best(t_farm *farm);
+t_room	*init_room(t_farm *farm);
 
 /* bfs.c */
-int	bfs(t_farm *farm, int *distances);
+int	bfs(t_farm *farm, int *distances, t_room *room);
 
 /* queue helpers.c */
 t_queue *new_queue(int size);
