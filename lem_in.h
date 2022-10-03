@@ -6,13 +6,14 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/10/03 11:06:45 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/03 17:44:21 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 # define MAX_INT 2147483647
+# define OK 1
 
 # include "libft/libft.h"
 # include <fcntl.h>
@@ -40,20 +41,31 @@ typedef struct s_farm
 	int		*links;
 }				t_farm;
 
+typedef enum	room_state
+{
+	FREE,
+	VISITED,
+	USED,
+	PASS,
+	ONLYBACK
+}				t_room_state;
+
 typedef struct s_room_info
 {
-	int	state;
-	int	prev;
-	int	next;
+	t_room_state	state;
+	int				prev;
+	int				next;
+	int				distance;
 }			t_room_info;
 
 typedef struct s_solution
 {
-	int	n_paths;
-	int	result;
-	t_room_info	*data; // struct room_info *room_states
-	int	*lengths;
-	int	*starts;
+	int			n_paths;
+	int			result;
+	t_room_info	*room;
+	int			*data;
+	int			*lengths;
+	int			*starts;
 }			t_solution;
 
 typedef struct s_best
@@ -79,14 +91,6 @@ enum	state
 	ROOMS,
 	LINKS,
 	ERROR
-};
-
-enum	room_state
-{
-	FREE,
-	VISITED,
-	USED,
-	PASS
 };
 
 void	parse(t_farm *farm);
@@ -131,10 +135,10 @@ void	free_solution(t_solution *solution, t_best *best);
 /* init.c */
 t_solution	*init_solution(t_farm *farm);
 t_best	*init_best(t_farm *farm);
-t_room	*init_room(t_farm *farm);
 
 /* bfs.c */
-int	bfs(t_farm *farm, int *distances, t_room *room);
+int	bfs(t_farm *farm, t_solution *solution);
+int	track_back(t_farm *farm, t_solution *solution);
 
 /* queue helpers.c */
 t_queue *new_queue(int size);

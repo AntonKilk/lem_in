@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 11:30:39 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/30 19:24:25 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/03 17:44:40 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ int	solve(t_farm *farm, int *distances)
 	int			start;
 	t_solution	*solution;
 	t_best		*best;
-	t_room		*room;
 
 	best = init_best(farm);
 	if(!best)
@@ -142,15 +141,37 @@ int	solve(t_farm *farm, int *distances)
 	solution = init_solution(farm);
 	if(!solution)
 		return (error(NULL, "Allocation error in solve()\n"));
-	room = init_room(farm);
-	if(!room)
-		return (error(NULL, "Allocation error in solve()\n"));
-
 
 	// pass room to bfs
 	// fill room state, prev during bfs
-	bfs(farm, distances, room);
+	bfs(farm, solution);
+	track_back(farm, solution);
 
+	for (size_t i = 0; i < farm->rooms_nb; i++)
+	{
+		printf("%3d", solution->room[i].prev);
+	}
+	printf("\n");
+	for (size_t i = 0; i < farm->rooms_nb; i++)
+	{
+		printf("%3d", solution->room[i].next);
+	}
+	printf("\n");
+	for (size_t i = 0; i < farm->rooms_nb; i++)
+	{
+		printf("%3d", solution->room[i].state);
+	}
+	printf("\n");
+	for (size_t i = 0; i < farm->rooms_nb; i++)
+	{
+		printf("%3d", solution->room[i].distance);
+	}
+	printf("\n solution \n");
+	for (size_t i = 0; i < farm->rooms_nb; i++)
+	{
+		printf("%3d", solution->data[i]);
+	}
+	printf("\n");
 	// print_path(farm, solution, best);
 	free_solution(solution, best);
 	return (1);

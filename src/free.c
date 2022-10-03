@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 11:27:04 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/30 19:11:50 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/03 16:24:21 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ char	**free_tab(char **tab, int x)
 
 void	free_solution(t_solution *solution, t_best *best)
 {
-	free(solution->data);
+	free(solution->room);
 	free(solution->lengths);
 	free(solution->starts);
+	free(solution->data);
 	free(best->solution);
 	free(best->starts);
 }
