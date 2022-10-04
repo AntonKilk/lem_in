@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 19:57:18 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/28 15:33:07 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/04 15:15:43 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int	preprocess_farm(t_farm *farm)
 			int l2 = connected(farm, current, linked[1]);
 			int ol = connected(farm, linked[0], linked[1]);
 			// printf("l1 %d l2 %d ol %d\n", l1, l2, ol);
-			set_length(farm, current, linked[0], 0);
-			set_length(farm, current, linked[1], 0);
+			set_link(farm, current, linked[0], 0);
+			set_link(farm, current, linked[1], 0);
 			if ( ol == 0  || (ol > l1 + l2))
-				set_length(farm, linked[0], linked[1], l1 + l2);
+				set_link(farm, linked[0], linked[1], l1 + l2);
 		}
 		current++;
 	}

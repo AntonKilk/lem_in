@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/10/03 18:48:21 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/04 15:23:09 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef enum	room_state
 	VISITED,
 	USED,
 	PASS,
-	ONLYBACK
+	LEAVE
 }				t_room_state;
 
 typedef struct s_room_info
@@ -62,6 +62,7 @@ typedef struct s_solution
 {
 	int			n_paths;
 	int			result;
+	int			old_path_used;
 	t_room_info	*room;
 	int			*data;
 	int			*lengths;
@@ -117,7 +118,7 @@ int	*new_int_arr(int size);
 int	max_paths_nb(t_farm *farm);
 int	count_links(t_farm *farm, int node);
 int	connected(t_farm *farm, int from, int to);
-void	set_length(t_farm *farm, int from, int to, int len);
+void	set_link(t_farm *farm, int from, int to, int len);
 int	find_end(t_farm *farm);
 int	find_start(t_farm *farm);
 
@@ -135,6 +136,7 @@ void	free_solution(t_solution *solution, t_best *best);
 /* init.c */
 t_solution	*init_solution(t_farm *farm);
 t_best	*init_best(t_farm *farm);
+void	init_room_info(t_farm *farm, t_room_info *info);
 
 /* bfs.c */
 int	bfs(t_farm *farm, t_solution *solution);

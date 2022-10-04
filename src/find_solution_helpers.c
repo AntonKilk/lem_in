@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:34:20 by akilk             #+#    #+#             */
-/*   Updated: 2022/09/28 15:32:07 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/04 15:02:39 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	connected(t_farm *farm, int from, int to)
 	return (farm->links[from * farm->rooms_nb + to]);
 }
 
-void	set_length(t_farm *farm, int from, int to, int len)
+void	set_link(t_farm *farm, int from, int to, int len)
 {
 	farm->links[from * farm->rooms_nb + to] = len;
 	farm->links[to * farm->rooms_nb + from] = len;
