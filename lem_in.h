@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:20:48 by akilk             #+#    #+#             */
-/*   Updated: 2022/10/03 17:44:21 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/03 18:48:21 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	find_end(t_farm *farm);
 int	find_start(t_farm *farm);
 
 /* find_solution.c */
-int	solve(t_farm *farm, int *distances);
+int	solve(t_farm *farm);
 int	solve_from(int current, t_farm *farm, t_solution *solution, t_best *best);
 
 /* optimize.c */

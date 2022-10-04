@@ -6,7 +6,7 @@
 /*   By: akilk <akilk@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:24:25 by akilk             #+#    #+#             */
-/*   Updated: 2022/10/03 17:50:08 by akilk            ###   ########.fr       */
+/*   Updated: 2022/10/04 10:09:54 by akilk            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,6 @@ int	end_reached(t_farm *farm, t_solution *solution)
 	return (1);
 }
 
-// t_list	*find_path(t_farm *farm, int *distances, int *len)
-// {
-// 	t_list	*curr_room;
-// 	t_list	*path;
-// 	int	current;
-
-// 	path = NULL;
-// 	current = find_end(farm);
-// 	curr_room = ft_lstnew(&current, sizeof(current));
-// 	ft_lstadd(&path, curr_room);
-// 	(*len)++;
-// 	while(current)
-// 	{
-// 		(*len)++;
-// 		current = * (int *)path->content;
-// 		if (!check_connections(farm, &path, distances, current))
-// 			break ;
-// 	}
-// 	return (path);
-// }
-
 int	track_back(t_farm *farm, t_solution *solution)
 {
 	int	current;
@@ -51,6 +30,8 @@ int	track_back(t_farm *farm, t_solution *solution)
 		prev = solution->room[current].prev;
 		solution->room[prev].next = current;
 		current = prev;
+		if (current != farm->start)
+			solution->room[current].state = 2;
 	}
 }
 
@@ -66,15 +47,18 @@ int	check_state(t_farm *farm, t_solution *solution, int current, int next)
 		return (OK);
 	}
 	else if (solution->room[next].state == FREE
+		&& solution->room[next].distance == -1
 		&& solution->room[current].state != ONLYBACK)
 	{
 		printf("entering FREE\n");
 		solution->room[next].state = VISITED;
 		return (OK);
 	}
-	else if (solution->data[current] != farm->start
+	else if (current != farm->start
+		&& solution->room[current].state == VISITED
 		&& solution->room[next].state == USED)
 	{
+		//check if possible to move back
 		printf("entering USED\n");
 		solution->room[next].state = ONLYBACK;
 		return (OK);
@@ -87,7 +71,7 @@ int	check_state(t_farm *farm, t_solution *solution, int current, int next)
 //set t_room_info→next to next room
 //set t_room_info→prev to previous room
 //set this_room t_room_info→states to 1
-void	set_distances(t_farm *farm, t_queue *q, int current, t_solution *solution)
+void	check_connections(t_farm *farm, t_queue *q, int current, t_solution *solution)
 {
 	int	next;
 	int	row;
@@ -98,10 +82,9 @@ void	set_distances(t_farm *farm, t_queue *q, int current, t_solution *solution)
 	next = 0;
 	while (next < farm->rooms_nb)
 	{
-		// printf("cur: %d i: %d dist:%d\n", current, i, distances[i]);
+		// printf("cur: %s next: %s\n", farm->rooms[current], farm->rooms[next]);
 		if (connected(farm, current, next) && check_state(farm, solution, current, next))
 		{
-
 			printf("check link %s-%s\n", farm->rooms[current], farm->rooms[next]);
 			solution->room[next].distance = new_distance;
 			solution->room[next].prev = current;
@@ -121,10 +104,10 @@ int	bfs(t_farm *farm, t_solution *solution)
 	q = new_queue(farm->rooms_nb);
 	solution->room[current].distance = 0;
 	put(q, current);
-	while (current != farm->end)
+	while (!is_empty(q))
 	{
 		current = get(q);
-		set_distances(farm, q, current, solution);
+		check_connections(farm, q, current, solution);
 	}
 	if (!end_reached(farm, solution))
 	{
